@@ -1,0 +1,11 @@
+.formulario-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+.contenedor{
+    margin-top: 80px;
+}
