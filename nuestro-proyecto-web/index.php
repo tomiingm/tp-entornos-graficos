@@ -36,8 +36,8 @@
 
     <!-- Botones -->
     <div class="d-flex justify-content-center gap-3 mt-4">
-      <a href="#" class="btn btn-primary px-4">Iniciar Sesión</a>
-      <a href="#" class="btn btn-outline-dark px-4">Registrarse</a>
+      <a href="php/login.php" class="btn btn-primary px-4">Iniciar Sesión</a>
+      <a href="php/registro.php" class="btn btn-outline-dark px-4">Registrarse</a>
     </div>
 
   </div>
