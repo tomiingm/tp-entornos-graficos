@@ -8,6 +8,9 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
+<?php
+session_start();
+?>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
@@ -35,9 +38,16 @@
     </p>
 
     <!-- Botones -->
-    <div class="d-flex justify-content-center gap-3 mt-4">
-      <a href="php/login.php" class="btn btn-primary px-4">Iniciar Sesión</a>
-      <a href="php/registro.php" class="btn btn-outline-dark px-4">Registrarse</a>
+   <div class="d-flex justify-content-center gap-3 mt-4"> 
+      <?php if (!isset($_SESSION["usuario_id"])): ?>
+        <a href="php/login.php" class="btn btn-primary px-4">Iniciar Sesión</a>
+        <a href="php/registro.php" class="btn btn-outline-dark px-4">Registrarse</a>
+      <?php else: ?>
+        <span class="align-self-center fw-bold">
+          Hola, <?= htmlspecialchars($_SESSION["nombre"] . " " . $_SESSION["apellido"]) ?>
+        </span>
+        <a href="php/cerrarsesion.php" class="btn btn-danger px-4">Cerrar Sesión</a>
+      <?php endif; ?>
     </div>
 
   </div>

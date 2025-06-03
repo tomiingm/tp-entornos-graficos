@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["usuario_id"] = $usuario["id"];
             $_SESSION["nombre"] = $usuario["nombre"];
             $_SESSION["apellido"] = $usuario["apellido"];
-            $_SESSION["rol"] = $usuario["rol"] ; // VER TEMA DE ROLES
+            $_SESSION["rol"] = $usuario["rol"] ;
 
             header("Location: vacantes.php"); // REDIRIGIR
             exit();
