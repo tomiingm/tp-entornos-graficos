@@ -20,7 +20,7 @@ session_start();
             <a class="nav-link active rounded-pill px-4 bg-secondary text-white" href="#">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-4" href="#">Vacantes</a>
+            <a class="nav-link px-4" href="php/vacantes.php">Vacantes</a>
           </li>
         </ul>
       </div>
