@@ -1,3 +1,5 @@
+<?php session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,7 +12,7 @@
 </head>
 
 <?php
-session_start();
+
 require('conection.php');
 if (!$conn) {
     die("Error al conectar con la base de datos: " . mysqli_connect_error());
@@ -31,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($clave, $usuario["clave"])) {
             $_SESSION["mail"]= $usuario["mail"];
             $_SESSION["dni"]= $usuario["dni"];
-            $_SESSION["usuario_id"] = $usuario["id"];
+            $_SESSION["usuario_id"] = $usuario["ID"];
             $_SESSION["nombre"] = $usuario["nombre"];
             $_SESSION["apellido"] = $usuario["apellido"];
             $_SESSION["rol"] = $usuario["rol"] ;

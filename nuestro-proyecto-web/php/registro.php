@@ -47,11 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="formulario-box shadow">
                     <h2 class="text-center mb-4">Registrate</h2>
-                    <?php if ($mensaje){ ?>
-                    <div class="alert alert-info">
-                        <? echo $mensaje ?>
-                    </div>
-                    <?php } ?>
+                    <?php if ($mensaje){
+                    echo "<div class='alert alert-info'>";
+                    echo $mensaje;
+                    echo "</div>";
+                    } ?>
                     <form action="registro.php" method="post">
                         <div class="mb-3">
                             <label for="dni" class="form-label">Número de Documento (DNI):</label>

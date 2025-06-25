@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,9 +11,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-<?php
-session_start();
-?>
+
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">

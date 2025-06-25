@@ -1,3 +1,5 @@
+<?php session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -9,10 +11,9 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 <?php
-session_start();
 require('conection.php');
 
-$sql = "SELECT * FROM vacante WHERE fecha_fin > CURDATE() ORDER BY fecha_ini DESC";
+$sql = "SELECT * FROM vacante WHERE fecha_fin > CURDATE() ORDER BY fecha_fin DESC";
 $resultado = mysqli_query($conn, $sql);
 ?>
 
@@ -49,9 +50,12 @@ $resultado = mysqli_query($conn, $sql);
       echo "<div class='vacante'>" ;
       echo "<h5> Vacante: " .$unaVacante["titulo"] . "</h5>" ;
       echo "<p class='descripcion-recortada'>" . $unaVacante["descripcion"] . " </p>" ;
-      echo "<a href='vacante.php?id=<?=". $unaVacante['ID'] ."?>' class='ver-mas'>Ver más</a>";
-      echo "<p class='fecha'> Fecha finalizacion: " . $unaVacante["fecha_fin"] . "</p>";
+      $fechaOriginal = $unaVacante["fecha_fin"];
+      $fechaConFormato = date("d-m-Y", strtotime($fechaOriginal));
+      echo "<p class='fecha'> Fecha finalizacion: " . $fechaConFormato . "</p> <p class='estado'> Estado: ". $unaVacante['estado'] . "</p>";
+      echo "<a class='ver-mas' href='unavacante.php?id=". $unaVacante['ID'] ."?>' class='ver-mas'>Ver más</a>";
       echo "</div>";
+      
       } ?>
     </div>
 </div>
