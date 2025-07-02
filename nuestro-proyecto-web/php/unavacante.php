@@ -40,8 +40,8 @@ $vacante = mysqli_fetch_assoc($resultado);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   
 </head>
-<body > 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <div class="collapse navbar-collapse justify-content-center">
         <ul class="navbar-nav">
@@ -72,9 +72,10 @@ $vacante = mysqli_fetch_assoc($resultado);
     ?>
   </div>
 
+
   <div class="columna">
     <div class="contenedor-botones">
-      <a href="postularse.php?id=<?= $vacante['ID'] ?>" class="btn btn-primary">Postulate</a>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Postulate </button>
       <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] == 1): ?>
         <a href="editar_vacante.php?id=<?= $vacante['ID'] ?>" class="btn btn-warning">Editar</a>
         <a href="orden_merito.php?id=<?= $vacante['ID'] ?>" class="btn btn-info">Orden de Mérito</a>
@@ -84,5 +85,33 @@ $vacante = mysqli_fetch_assoc($resultado);
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <?php
+          echo "¿Segur@ que quieres postularte a la vacante" . $vacante['titulo'] . " ?";
+        ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </body>
+
+
+
+
 </html>
