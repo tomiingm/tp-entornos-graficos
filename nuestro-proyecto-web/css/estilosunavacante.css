@@ -1,27 +1,19 @@
 .imagen{
-  display: block;
-  margin: 20px auto;
   max-width: 800px;
 }
-
 
 .contenedor {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 15px;
   gap: 20px;
+  width: 100%;
 }
 
 .columna {
-  flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-.vacante {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  width: 40%;
 }
 
 .contenedor-botones {
@@ -34,4 +26,11 @@
 .contenedor-botones a {
   width: 160px;
   text-align: center;
+}
+
+.cabecera{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
 }

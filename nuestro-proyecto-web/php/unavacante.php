@@ -55,17 +55,22 @@ $vacante = mysqli_fetch_assoc($resultado);
       </div>
     </div>
   </nav>
- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" 
-     alt="Logo Universidad" class="imagen">
 
+<div class="contenedor">
+<div class="cabecera">
+  <?php
+  echo "<h2>". $vacante['titulo'] ."</h2>";
+  ?>
+ <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="imagen">
+</div>
+</div>
 <hr>
 
 <div class="contenedor">
   
-
-  <div class="columna vacante">
+  <div class="columna">
     <?php
-      echo "<h2>". $vacante['titulo'] ."</h2>";        
+              
       echo "<p> ". $vacante['descripcion'] . "</p>";
       echo "<p><strong>Inicio: </strong> " . $vacante['fecha_ini'] ."</p>";
       echo "<p><strong>Fin: </strong>" . $vacante['fecha_fin'] ."</p>";
@@ -73,12 +78,13 @@ $vacante = mysqli_fetch_assoc($resultado);
   </div>
 
 
-  <div class="columna">
+  <div class="columna-botones">
     <div class="contenedor-botones">
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Postulate </button>
       <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] == 1): ?>
         <a href="editar_vacante.php?id=<?= $vacante['ID'] ?>" class="btn btn-warning">Editar</a>
         <a href="orden_de_merito.php?id=<?= $vacante['ID'] ?>" class="btn btn-info">Orden de Mérito</a>
+        <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#finalizarModal"> Finalizar</button>
       <?php endif; ?>
     </div>

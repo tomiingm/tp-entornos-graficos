@@ -34,14 +34,14 @@ $resultado = mysqli_query($conn, $sql);
 
 <div class="container">
 
-    <img class="imagen" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" style="max-width: 800px;" class="mb-4">
+    <img class="imagen" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="logo-facu">
 
     <div class="linea">
-        <div>
+        <div class="titulo">
             <p>Vacantes</p>
         </div>
         <div>
-            <input type="text" class="buscar" name="busqueda" id="busqueda">
+            <input type="text" class="buscar" name="busqueda" id="busqueda" placeholder="Buscar">
         </div>
     </div>
     

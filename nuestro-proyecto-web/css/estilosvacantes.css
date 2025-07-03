@@ -11,16 +11,20 @@
     margin-top: 30px;
     align-items: baseline;
     justify-content: flex-start;
+    width: 80%;
 }
 
-p{
+.titulo{
     font-size: 22px;
+    margin-left: 5px;
 }
 
 .buscar{
-    border-radius: 10px;
+    border-radius: 15px;
     margin-left: 20px;
-    width: 360px;
+    width: 420px;
+    padding: 5px 0 5px 8px;
+    border-width: 0.2px;
 }
 
 .imagen{
@@ -28,9 +32,11 @@ p{
 }
 
 .scroll-vacantes {
+      padding: 5px;
       height: 600px;
-      width:80%;
+      width: 80%;
       overflow-y: auto;
+      overflow-x: auto;
 }
 
 .scroll-vacantes::-webkit-scrollbar {
@@ -48,7 +54,7 @@ p{
     border: 1px solid gray;
     border-radius: 5px;
     padding: 10px;
-    margin: 5px 0 5px 0;
+    margin-bottom: 15px;
 }
 
 .descripcion-recortada {
