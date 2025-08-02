@@ -79,17 +79,24 @@ $vacante = mysqli_fetch_assoc($resultado);
 
 
   <div class="columna-botones">
-    <div class="contenedor-botones">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> Postulate </button>
-      <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] == 1): ?>
-        <a href="editar_vacante.php?id=<?= $vacante['ID'] ?>" class="btn btn-warning">Editar</a>
-        <a href="orden_de_merito.php?id=<?= $vacante['ID'] ?>" class="btn btn-info">Orden de Mérito</a>
-        <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#finalizarModal"> Finalizar</button>
-      <?php endif; ?>
-    </div>
+  <div class="contenedor-botones">
+    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] == 0): ?>
+      <form action="crear_postulacion.php" method="post" style="display:inline;">
+        <input type="hidden" name="id_persona" value="<?= $_SESSION['usuario_id'] ?>">
+        <input type="hidden" name="id_vacante" value="<?= $vacante['ID'] ?>">
+        <button type="submit" class="btn btn-primary">Postulate</button>
+      </form>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] == 1): ?>
+      <a href="editar_vacante.php?id=<?= $vacante['ID'] ?>" class="btn btn-warning">Editar</a>
+      <a href="orden_de_merito.php?id=<?= $vacante['ID'] ?>" class="btn btn-info">Orden de Mérito</a>
+      <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#finalizarModal">Finalizar</button>
+    <?php endif; ?>
   </div>
 </div>
+
 
 <!-- Modals -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
