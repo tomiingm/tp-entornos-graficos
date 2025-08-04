@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-07-2025 a las 14:13:57
+-- Tiempo de generación: 04-08-2025 a las 20:03:35
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -24,26 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `item`
---
-
-CREATE TABLE `item` (
-  `nro_item` int(11) NOT NULL,
-  `ID_Vacante` int(11) NOT NULL,
-  `descripcion` varchar(256) NOT NULL,
-  `valor_max` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `item`
---
-
-INSERT INTO `item` (`nro_item`, `ID_Vacante`, `descripcion`, `valor_max`) VALUES
-(2, 2, 'Titulo universitario', 10);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `persona`
 --
 
@@ -54,67 +34,20 @@ CREATE TABLE `persona` (
   `mail` varchar(256) NOT NULL,
   `clave` varchar(256) NOT NULL,
   `DNI` int(11) NOT NULL,
-  `rol` tinyint(1) NOT NULL DEFAULT 0
+  `rol` tinyint(1) NOT NULL DEFAULT 0,
+  `cv` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`) VALUES
-(1, 'admin', 'administrador', 'admin@example.com', '$2y$10$51H.VUNWKPqw3JlllWFUgurgRhLq70D/lZjF6I05TakEonCRs5HsC', 12345678, 1);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `postulacion`
---
-
-CREATE TABLE `postulacion` (
-  `ID_Persona` int(11) NOT NULL,
-  `ID_Vacante` int(11) NOT NULL,
-  `fecha_hora_post` date NOT NULL,
-  `resultado` varchar(256) NOT NULL,
-  `CV` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`CV`)),
-  `puntaje` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `vacante`
---
-
-CREATE TABLE `vacante` (
-  `ID` int(11) NOT NULL,
-  `estado` varchar(256) NOT NULL,
-  `descripcion` varchar(525) NOT NULL,
-  `fecha_ini` date NOT NULL,
-  `fecha_fin` date NOT NULL,
-  `titulo` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `vacante`
---
-
-INSERT INTO `vacante` (`ID`, `estado`, `descripcion`, `fecha_ini`, `fecha_fin`, `titulo`) VALUES
-(1, 'abierta', 'La Facultad Regional busca incorporar un/a docente para el dictado de la asignatura Matemática I correspondiente al primer año de la carrera de Ingeniería.\r\nEl/la postulante deberá contar con conocimientos sólidos en álgebra, funciones, límites y cálculo diferencial. Se valorará experiencia previa en docencia universitaria y manejo de herramientas digitales para la enseñanza.\r\nCarga horaria: 6hs.', '2025-06-05', '2025-08-05', 'Profesor/a de Matemática'),
-(2, 'abierta', 'Se requiere un/a profesor/a auxiliar para colaborar en clases prácticas de la materia Matemática Discreta en la carrera de Ingeniería en Sistemas.\r\nEntre las tareas se incluyen: resolución de ejercicios en clase, asistencia en corrección de trabajos prácticos y apoyo a los estudiantes durante consultas.\r\nEs deseable tener conocimientos de lógica proposicional, conjuntos, relaciones, grafos y estructuras algebraicas básicas.\r\nCarga horaria: 4 hs.', '2025-06-25', '2025-08-25', 'Profesor/a Auxiliar de Matemática Discreta'),
-(3, 'abierta', 'Se busca un/a profesor/a para dictar clases teóricas y prácticas de la materia Física I en la carrera de Ingeniería. Se valorará experiencia previa docente y conocimiento en mecánica clásica, cinemática, dinámica y leyes de Newton. Carga horaria: 6 hs semanales.\r\n', '2025-07-01', '2025-08-01', 'Profesor/a de Física I'),
-(4, 'abierta', 'Se necesita un/a auxiliar para colaborar en el dictado de clases prácticas de Programación. Las tareas incluyen asistencia en clases, corrección de ejercicios, y soporte en los laboratorios de computación. Se requiere dominio de C/C++ y estructuras de datos básicas. Carga horaria: 4 hs.', '2025-07-15', '2025-08-29', 'Auxiliar de Laboratorio de Programación'),
-(5, 'cerrada', 'Vacante para profesor/a responsable del dictado de la asignatura Geometría y Álgebra. El candidato ideal deberá tener conocimientos sólidos en álgebra lineal, matrices, determinantes, espacios vectoriales y geometría analítica. Experiencia docente deseable. Carga horaria: 6 hs semanales.', '2025-01-01', '2025-02-28', 'Profesor/a de Geometría y Álgebra');
+INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`, `cv`) VALUES
+(1, 'admin', 'administrador', 'admin@example.com', '$2y$10$51H.VUNWKPqw3JlllWFUgurgRhLq70D/lZjF6I05TakEonCRs5HsC', 12345678, 1, '');
 
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `item`
---
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`nro_item`,`ID_Vacante`),
-  ADD KEY `FK_VACANTE2` (`ID_Vacante`);
 
 --
 -- Indices de la tabla `persona`
@@ -123,56 +56,14 @@ ALTER TABLE `persona`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indices de la tabla `postulacion`
---
-ALTER TABLE `postulacion`
-  ADD PRIMARY KEY (`ID_Persona`,`ID_Vacante`,`fecha_hora_post`),
-  ADD KEY `FK_VACANTE` (`ID_Vacante`);
-
---
--- Indices de la tabla `vacante`
---
-ALTER TABLE `vacante`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
-
---
--- AUTO_INCREMENT de la tabla `item`
---
-ALTER TABLE `item`
-  MODIFY `nro_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `vacante`
---
-ALTER TABLE `vacante`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `item`
---
-ALTER TABLE `item`
-  ADD CONSTRAINT `FK_VACANTE2` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `postulacion`
---
-ALTER TABLE `postulacion`
-  ADD CONSTRAINT `FK_PERSONA` FOREIGN KEY (`ID_Persona`) REFERENCES `persona` (`ID`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_VACANTE` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

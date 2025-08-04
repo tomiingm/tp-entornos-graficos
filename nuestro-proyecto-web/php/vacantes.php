@@ -27,6 +27,9 @@ $resultado = mysqli_query($conn, $sql);
         <li class="nav-item">
           <a class="nav-link rounded-pill active px-4 bg-secondary text-white" href="../php/vacantes.php">Vacantes</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link px-4" href="../php/perfil.php">Perfil</a>
+          </li>
       </ul>
     </div>
   </div>
