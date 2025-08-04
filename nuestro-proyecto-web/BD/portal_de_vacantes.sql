@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-08-2025 a las 20:03:35
+-- Tiempo de generación: 04-08-2025 a las 22:12:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -24,46 +24,38 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `persona`
+-- Estructura de tabla para la tabla `postulacion`
 --
 
-CREATE TABLE `persona` (
-  `ID` int(11) NOT NULL,
-  `nombre` varchar(256) NOT NULL,
-  `apellido` varchar(256) NOT NULL,
-  `mail` varchar(256) NOT NULL,
-  `clave` varchar(256) NOT NULL,
-  `DNI` int(11) NOT NULL,
-  `rol` tinyint(1) NOT NULL DEFAULT 0,
-  `cv` varchar(50) NOT NULL
+CREATE TABLE `postulacion` (
+  `ID_Persona` int(11) NOT NULL,
+  `ID_Vacante` int(11) NOT NULL,
+  `fecha_hora_post` date NOT NULL,
+  `resultado` varchar(256) NOT NULL,
+  `puntaje` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `persona`
---
-
-INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`, `cv`) VALUES
-(1, 'admin', 'administrador', 'admin@example.com', '$2y$10$51H.VUNWKPqw3JlllWFUgurgRhLq70D/lZjF6I05TakEonCRs5HsC', 12345678, 1, '');
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `persona`
+-- Indices de la tabla `postulacion`
 --
-ALTER TABLE `persona`
-  ADD PRIMARY KEY (`ID`);
+ALTER TABLE `postulacion`
+  ADD PRIMARY KEY (`ID_Persona`,`ID_Vacante`,`fecha_hora_post`),
+  ADD KEY `FK_VACANTE` (`ID_Vacante`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- Restricciones para tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `persona`
+-- Filtros para la tabla `postulacion`
 --
-ALTER TABLE `persona`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `postulacion`
+  ADD CONSTRAINT `FK_PERSONA` FOREIGN KEY (`ID_Persona`) REFERENCES `persona` (`ID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_VACANTE` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
