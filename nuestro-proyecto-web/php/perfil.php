@@ -83,7 +83,7 @@ echo "<p> Nombre: " . $usuario['nombre']. "<p>";
 echo "<p> Apellido: " . $usuario['apellido']. "<p>";
 echo "<p> Documento: " . $usuario['DNI']. "<p>";
 echo "<p> Correo: " . $usuario['mail']. "<p>";
-echo "<a href='../php/cerrarsesion.php' class='btn btn-danger px-4'>Cerrar Sesión</a>";
+
 ?>
 
 <!-- Botón para subir CV -->
@@ -98,6 +98,10 @@ echo "<a href='../php/cerrarsesion.php' class='btn btn-danger px-4'>Cerrar Sesi�
 <?php if (isset($mensaje)) : ?>
     <div class="alert alert-info"><?php echo $mensaje; ?></div>
 <?php endif; ?>
+
+<?php
+echo "<a href='../php/cerrarsesion.php' class='btn btn-danger px-4'>Cerrar Sesión</a>";
+?>
 
 </body>
 </html>

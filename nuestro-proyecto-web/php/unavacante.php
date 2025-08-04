@@ -51,6 +51,9 @@ $vacante = mysqli_fetch_assoc($resultado);
           <li class="nav-item">
             <a class="nav-link active rounded-pill px-4 bg-secondary text-white" href="vacantes.php">Vacantes</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link px-4" href="../php/perfil.php">Perfil</a>
+          </li>
         </ul>
       </div>
     </div>
