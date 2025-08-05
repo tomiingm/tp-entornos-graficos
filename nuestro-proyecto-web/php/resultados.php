@@ -57,18 +57,36 @@ $resultado = mysqli_query($conn, $sql);
   </div>
 
   <div class="scroll-vacantes">
-    <?php while($unaPersona = mysqli_fetch_assoc($resultado)) { 
-      echo "<div class='vacante'>" ;
-      echo "<p> Nombre: " . htmlspecialchars($unaPersona["nombre"]) ." ". htmlspecialchars($unaPersona["apellido"]) . "</p>" ;
-      echo "<p class='correo'> Correo: " . htmlspecialchars($unaPersona["mail"]) . "</p>";
-      echo "<p class='documento'> DNI: " . htmlspecialchars($unaPersona["DNI"]) . "</p>";
-      echo "<div class='mt-3'>";
-      echo "<a href=". $unaPersona['cv'] . " class='btn btn-outline-primary' download>";
-      echo "Descargar CV </a> </div>";
-      echo "<a href='resultado_item.php'> Asignar puntaje </a>";
-      echo "</div>";
-    } ?>
-  </div>
+  <?php while($unaPersona = mysqli_fetch_assoc($resultado)) { 
+    echo "<div class='vacante p-3 mb-4 border rounded'>";
+
+    echo "<p><strong>Nombre:</strong> " . htmlspecialchars($unaPersona["nombre"]) ." ". htmlspecialchars($unaPersona["apellido"]) . "</p>" ;
+    echo "<p class='correo'><strong>Correo:</strong> " . htmlspecialchars($unaPersona["mail"]) . "</p>";
+    echo "<p class='documento'><strong>DNI:</strong> " . htmlspecialchars($unaPersona["DNI"]) . "</p>";
+
+    echo "<div class='mt-2'>";
+    echo "<a href='" . htmlspecialchars($unaPersona['cv']) . "' class='btn btn-outline-primary' download>Descargar CV</a>";
+    echo "</div>";
+
+    echo "<div class='mt-2'>";
+    echo "<a href='resultado_item.php?id_persona=" . urlencode($unaPersona['ID']) . "&id_vacante=" . urlencode($idVacante) . "' class='btn btn-outline-success'>Asignar puntaje</a>";
+    echo "</div>";
+
+    $idPersona = intval($unaPersona['ID']);
+    $queryPuntaje = "SELECT SUM(resultado) AS total FROM resultado_item WHERE ID = $idPersona AND ID_Vacante = $idVacante";
+    $resPuntaje = mysqli_query($conn, $queryPuntaje);
+    $puntaje = mysqli_fetch_assoc($resPuntaje)['total'];
+
+    echo "<div class='mt-2'>";
+    if ($puntaje !== null) {
+        echo "<span class='badge bg-info text-dark'>Puntaje total: $puntaje</span>";
+    } else {
+        echo "<span class='badge bg-secondary'>Aún no se asignó puntaje</span>";
+    }
+    echo "</div>";
+
+    echo "</div>";
+} ?>
 </div>
 
 <script>

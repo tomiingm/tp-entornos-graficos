@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 05-08-2025 a las 15:25:15
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Aug 05, 2025 at 06:32 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `portal_de_vacantes`
+-- Database: `portal_de_vacantes`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `item`
+-- Table structure for table `item`
 --
 
 CREATE TABLE `item` (
@@ -35,18 +35,38 @@ CREATE TABLE `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `item`
+-- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`nro_item`, `ID_Vacante`, `descripcion`, `valor_max`) VALUES
 (2, 2, 'Titulo universitario', 10),
 (7, 4, 'Trabajo en equipo', 8),
-(8, 4, 'Manejo de Workbench y lenguaje Mysql', 12);
+(8, 4, 'Manejo de Workbench y lenguaje Mysql', 12),
+(10, 1, 'valentía', 10),
+(11, 1, 'limpieza', 50);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `persona`
+-- Table structure for table `jefe_vacante`
+--
+
+CREATE TABLE `jefe_vacante` (
+  `id_jefe` int(11) NOT NULL,
+  `id_vacante` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jefe_vacante`
+--
+
+INSERT INTO `jefe_vacante` (`id_jefe`, `id_vacante`) VALUES
+(7, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `persona`
 --
 
 CREATE TABLE `persona` (
@@ -61,17 +81,20 @@ CREATE TABLE `persona` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `persona`
+-- Dumping data for table `persona`
 --
 
 INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`, `cv`) VALUES
 (1, 'admin', 'administrador', 'admin@example.com', '$2y$10$51H.VUNWKPqw3JlllWFUgurgRhLq70D/lZjF6I05TakEonCRs5HsC', 12345678, 1, ''),
-(5, 'Francisco', 'Bebo', 'fransbebobruno@gmail.com', '$2y$10$GQ3c/ObU8kLd.3vJD/9lK.zjEu.UhRhpVx/s6KKAnxyrGVT1KKLPG', 40312859, 0, '../uploads/cv_40312859.pdf');
+(5, 'Francisco', 'Bebo', 'fransbebobruno@gmail.com', '$2y$10$GQ3c/ObU8kLd.3vJD/9lK.zjEu.UhRhpVx/s6KKAnxyrGVT1KKLPG', 40312859, 0, '../uploads/cv_40312859.pdf'),
+(6, 'Tomas Malcolm', 'Gigli', 'tomasgigli@yahoo.com.ar', '$2y$10$s0/X9ldOjmkcqeUXjWxkje5mdf.gGlhhBzMoMm1FgcWNo0/oSggPG', 42959191, 0, '../uploads/cv_42959191.pdf'),
+(7, 'Jefe', 'De Catedra', 'jefedecatedra@gmail.com', '$2y$10$EBWE.jCCjNkMt4fG/Vzk4eB.yJ/BF7ll.lzvV4LT1H55D4L/muxaS', 12345677, 2, ''),
+(8, 'Cande', 'Gigli', 'candegigli@gmail.com', '$2y$10$1ultIMT1cipOVt7uw0VtF.dCkYupiNdinWOJBFBc/MguiAL4xomw.', 44123123, 0, '../uploads/cv_44123123.pdf');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `postulacion`
+-- Table structure for table `postulacion`
 --
 
 CREATE TABLE `postulacion` (
@@ -83,16 +106,19 @@ CREATE TABLE `postulacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `postulacion`
+-- Dumping data for table `postulacion`
 --
 
 INSERT INTO `postulacion` (`ID_Persona`, `ID_Vacante`, `fecha_hora_post`, `resultado`, `puntaje`) VALUES
-(5, 4, '2025-08-05', '', 0);
+(5, 4, '2025-08-05', '', 0),
+(6, 1, '2025-08-05', '', 0),
+(6, 3, '2025-08-05', '', 0),
+(8, 1, '2025-08-05', '', 0);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `resultado_item`
+-- Table structure for table `resultado_item`
 --
 
 CREATE TABLE `resultado_item` (
@@ -102,10 +128,18 @@ CREATE TABLE `resultado_item` (
   `resultado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `resultado_item`
+--
+
+INSERT INTO `resultado_item` (`ID`, `ID_Vacante`, `nro_item`, `resultado`) VALUES
+(6, 1, 10, 8),
+(6, 1, 11, 28);
+
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `vacante`
+-- Table structure for table `vacante`
 --
 
 CREATE TABLE `vacante` (
@@ -118,7 +152,7 @@ CREATE TABLE `vacante` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `vacante`
+-- Dumping data for table `vacante`
 --
 
 INSERT INTO `vacante` (`ID`, `estado`, `descripcion`, `fecha_ini`, `fecha_fin`, `titulo`) VALUES
@@ -129,83 +163,97 @@ INSERT INTO `vacante` (`ID`, `estado`, `descripcion`, `fecha_ini`, `fecha_fin`, 
 (5, 'cerrada', 'Vacante para profesor/a responsable del dictado de la asignatura Geometría y Álgebra. El candidato ideal deberá tener conocimientos sólidos en álgebra lineal, matrices, determinantes, espacios vectoriales y geometría analítica. Experiencia docente deseable. Carga horaria: 6 hs semanales.', '2025-01-01', '2025-02-28', 'Profesor/a de Geometría y Álgebra');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `item`
+-- Indexes for table `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`nro_item`,`ID_Vacante`),
   ADD KEY `FK_VACANTE2` (`ID_Vacante`);
 
 --
--- Indices de la tabla `persona`
+-- Indexes for table `jefe_vacante`
+--
+ALTER TABLE `jefe_vacante`
+  ADD PRIMARY KEY (`id_jefe`,`id_vacante`),
+  ADD KEY `id_vacante` (`id_vacante`);
+
+--
+-- Indexes for table `persona`
 --
 ALTER TABLE `persona`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indices de la tabla `postulacion`
+-- Indexes for table `postulacion`
 --
 ALTER TABLE `postulacion`
   ADD PRIMARY KEY (`ID_Persona`,`ID_Vacante`,`fecha_hora_post`),
   ADD KEY `FK_VACANTE` (`ID_Vacante`);
 
 --
--- Indices de la tabla `resultado_item`
+-- Indexes for table `resultado_item`
 --
 ALTER TABLE `resultado_item`
   ADD PRIMARY KEY (`ID`,`ID_Vacante`,`nro_item`),
   ADD KEY `ID_Vacante` (`ID_Vacante`,`nro_item`);
 
 --
--- Indices de la tabla `vacante`
+-- Indexes for table `vacante`
 --
 ALTER TABLE `vacante`
   ADD PRIMARY KEY (`ID`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `item`
+-- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `nro_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `nro_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT de la tabla `persona`
+-- AUTO_INCREMENT for table `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `vacante`
+-- AUTO_INCREMENT for table `vacante`
 --
 ALTER TABLE `vacante`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `item`
+-- Constraints for table `item`
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `FK_VACANTE2` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `postulacion`
+-- Constraints for table `jefe_vacante`
+--
+ALTER TABLE `jefe_vacante`
+  ADD CONSTRAINT `jefe_vacante_ibfk_1` FOREIGN KEY (`id_jefe`) REFERENCES `persona` (`ID`),
+  ADD CONSTRAINT `jefe_vacante_ibfk_2` FOREIGN KEY (`id_vacante`) REFERENCES `vacante` (`ID`);
+
+--
+-- Constraints for table `postulacion`
 --
 ALTER TABLE `postulacion`
   ADD CONSTRAINT `FK_PERSONA` FOREIGN KEY (`ID_Persona`) REFERENCES `persona` (`ID`) ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_VACANTE` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `resultado_item`
+-- Constraints for table `resultado_item`
 --
 ALTER TABLE `resultado_item`
   ADD CONSTRAINT `resultado_item_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `persona` (`ID`) ON DELETE CASCADE,

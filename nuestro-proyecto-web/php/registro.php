@@ -23,8 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = password_hash($_POST["clave"], PASSWORD_DEFAULT); //Encriptacion
     $dni = $_POST["dni"];
     $mail = $_POST["mail"];
+    $rol = $_POST["rol"];
 
-    $sql = "INSERT INTO persona (nombre, apellido, mail, clave, DNI) VALUES ('$nombre','$apellido','$mail','$password','$dni')";
+    $sql = "INSERT INTO persona (nombre, apellido, mail, clave, DNI, rol) VALUES ('$nombre','$apellido','$mail','$password','$dni','$rol')";
 
     if (mysqli_query($conn, $sql)) {
         $mensaje = "¡Registro exitoso!";
@@ -72,6 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="mb-3">
                             <label for="clave" class="form-label">Clave:</label>
                             <input type="password" class="form-control" name="clave" id="clave" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Rol:</label>
+                            <input type="number" class="form-control" name="rol" id="rol" required>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Registrarse</button>
