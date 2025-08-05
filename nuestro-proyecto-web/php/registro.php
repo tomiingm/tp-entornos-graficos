@@ -76,7 +76,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="mb-3">
                             <label for="rol" class="form-label">Rol:</label>
-                            <input type="number" class="form-control" name="rol" id="rol" required>
+                                <select class="form-select" name="rol" id="rol" required>
+                                    <option value="" disabled selected>Selecciona un rol</option>
+                                    <option value="0">Postulante</option>
+                                    <option value="2">Jefe de cátedra</option>
+                                </select>
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Registrarse</button>
