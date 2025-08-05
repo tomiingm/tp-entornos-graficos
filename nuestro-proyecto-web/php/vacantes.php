@@ -13,7 +13,7 @@
 <?php
 require('conection.php');
 
-$sql = "SELECT * FROM vacante WHERE fecha_fin > CURDATE() ORDER BY fecha_fin DESC";
+$sql = "SELECT * FROM vacante WHERE fecha_fin > CURDATE() OR estado <> 'cerrada' ORDER BY fecha_fin DESC";
 $resultado = mysqli_query($conn, $sql);
 ?>
 

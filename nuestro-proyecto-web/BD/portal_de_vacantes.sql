@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 05, 2025 at 02:00 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 05-08-2025 a las 13:57:20
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `portal_de_vacantes`
+-- Base de datos: `portal_de_vacantes`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `item`
+-- Estructura de tabla para la tabla `item`
 --
 
 CREATE TABLE `item` (
@@ -35,18 +35,18 @@ CREATE TABLE `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `item`
+-- Volcado de datos para la tabla `item`
 --
 
 INSERT INTO `item` (`nro_item`, `ID_Vacante`, `descripcion`, `valor_max`) VALUES
 (2, 2, 'Titulo universitario', 10),
-(5, 4, 'que tan lindo es', 10),
-(6, 4, 'que tan inteligente es', 10);
+(7, 4, 'Trabajo en equipo', 8),
+(8, 4, 'Manejo de Workbench y lenguaje Mysql', 12);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `persona`
+-- Estructura de tabla para la tabla `persona`
 --
 
 CREATE TABLE `persona` (
@@ -61,7 +61,7 @@ CREATE TABLE `persona` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `persona`
+-- Volcado de datos para la tabla `persona`
 --
 
 INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`, `cv`) VALUES
@@ -71,7 +71,7 @@ INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `postulacion`
+-- Estructura de tabla para la tabla `postulacion`
 --
 
 CREATE TABLE `postulacion` (
@@ -85,7 +85,7 @@ CREATE TABLE `postulacion` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `resultado_item`
+-- Estructura de tabla para la tabla `resultado_item`
 --
 
 CREATE TABLE `resultado_item` (
@@ -98,7 +98,7 @@ CREATE TABLE `resultado_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `vacante`
+-- Estructura de tabla para la tabla `vacante`
 --
 
 CREATE TABLE `vacante` (
@@ -111,94 +111,94 @@ CREATE TABLE `vacante` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `vacante`
+-- Volcado de datos para la tabla `vacante`
 --
 
 INSERT INTO `vacante` (`ID`, `estado`, `descripcion`, `fecha_ini`, `fecha_fin`, `titulo`) VALUES
 (1, 'abierta', 'La Facultad Regional busca incorporar un/a docente para el dictado de la asignatura Matemática I correspondiente al primer año de la carrera de Ingeniería.\r\nEl/la postulante deberá contar con conocimientos sólidos en álgebra, funciones, límites y cálculo diferencial. Se valorará experiencia previa en docencia universitaria y manejo de herramientas digitales para la enseñanza.\r\nCarga horaria: 6hs.', '2025-06-05', '2025-08-05', 'Profesor/a de Matemática'),
 (2, 'abierta', 'Se requiere un/a profesor/a auxiliar para colaborar en clases prácticas de la materia Matemática Discreta en la carrera de Ingeniería en Sistemas.\r\nEntre las tareas se incluyen: resolución de ejercicios en clase, asistencia en corrección de trabajos prácticos y apoyo a los estudiantes durante consultas.\r\nEs deseable tener conocimientos de lógica proposicional, conjuntos, relaciones, grafos y estructuras algebraicas básicas.\r\nCarga horaria: 4 hs.', '2025-06-25', '2025-08-25', 'Profesor/a Auxiliar de Matemática Discreta'),
 (3, 'abierta', 'Se busca un/a profesor/a para dictar clases teóricas y prácticas de la materia Física I en la carrera de Ingeniería. Se valorará experiencia previa docente y conocimiento en mecánica clásica, cinemática, dinámica y leyes de Newton. Carga horaria: 6 hs semanales.\r\n', '2025-07-01', '2025-08-01', 'Profesor/a de Física I'),
-(4, 'abierta', 'culo de la pija', '2025-07-15', '2025-08-29', 'pija con caca'),
+(4, 'abierta', 'La Facultad Regional busca incorporar un/a docente para el dictado de la asignatura Sistemas de Bases de Datos, correspondiente al tercer año de la carrera de Ingeniería en Sistemas de Información. El/la postulante deberá contar con conocimientos sólidos en modelado relacional, lenguaje SQL, normalización y administración de bases de datos. Carga horaria: 20 hs. semanales.', '2025-07-15', '2025-08-29', 'Profesor de Base de Datos'),
 (5, 'cerrada', 'Vacante para profesor/a responsable del dictado de la asignatura Geometría y Álgebra. El candidato ideal deberá tener conocimientos sólidos en álgebra lineal, matrices, determinantes, espacios vectoriales y geometría analítica. Experiencia docente deseable. Carga horaria: 6 hs semanales.', '2025-01-01', '2025-02-28', 'Profesor/a de Geometría y Álgebra');
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `item`
+-- Indices de la tabla `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`nro_item`,`ID_Vacante`),
   ADD KEY `FK_VACANTE2` (`ID_Vacante`);
 
 --
--- Indexes for table `persona`
+-- Indices de la tabla `persona`
 --
 ALTER TABLE `persona`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `postulacion`
+-- Indices de la tabla `postulacion`
 --
 ALTER TABLE `postulacion`
   ADD PRIMARY KEY (`ID_Persona`,`ID_Vacante`,`fecha_hora_post`),
   ADD KEY `FK_VACANTE` (`ID_Vacante`);
 
 --
--- Indexes for table `resultado_item`
+-- Indices de la tabla `resultado_item`
 --
 ALTER TABLE `resultado_item`
   ADD PRIMARY KEY (`ID`,`ID_Vacante`,`nro_item`),
   ADD KEY `ID_Vacante` (`ID_Vacante`,`nro_item`);
 
 --
--- Indexes for table `vacante`
+-- Indices de la tabla `vacante`
 --
 ALTER TABLE `vacante`
   ADD PRIMARY KEY (`ID`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `item`
+-- AUTO_INCREMENT de la tabla `item`
 --
 ALTER TABLE `item`
-  MODIFY `nro_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `nro_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `persona`
+-- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `vacante`
+-- AUTO_INCREMENT de la tabla `vacante`
 --
 ALTER TABLE `vacante`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `item`
+-- Filtros para la tabla `item`
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `FK_VACANTE2` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `postulacion`
+-- Filtros para la tabla `postulacion`
 --
 ALTER TABLE `postulacion`
   ADD CONSTRAINT `FK_PERSONA` FOREIGN KEY (`ID_Persona`) REFERENCES `persona` (`ID`) ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_VACANTE` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `resultado_item`
+-- Filtros para la tabla `resultado_item`
 --
 ALTER TABLE `resultado_item`
   ADD CONSTRAINT `resultado_item_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `persona` (`ID`) ON DELETE CASCADE,
