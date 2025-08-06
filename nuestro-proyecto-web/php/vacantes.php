@@ -13,27 +13,23 @@
 <?php
 require('conection.php');
 
-if (isset($_SESSION["usuario_id"]) and isset($_SESSION["rol"])) {
+if (isset($_SESSION["usuario_id"]) and isset($_SESSION["rol"]) and $_SESSION["rol"]==2 ) {
 
 $idUsuario = $_SESSION['usuario_id'];
 $rolUsuario = $_SESSION['rol'];
-
-if ($_SESSION['rol'] == 2) {
-    $sql = "SELECT v.* 
-            FROM vacante v
-            INNER JOIN jefe_vacante jv ON v.ID = jv.id_vacante
-            WHERE jv.id_jefe = $idUsuario
-            ORDER BY v.fecha_fin DESC";
-            $resultado = mysqli_query($conn, $sql);
-} }else {
+$sql = "SELECT v.* 
+        FROM vacante v
+        INNER JOIN jefe_vacante jv ON v.ID = jv.id_vacante
+        WHERE jv.id_jefe = $idUsuario
+        ORDER BY v.fecha_fin DESC";
+        $resultado = mysqli_query($conn, $sql);
+} else {
     $sql = "SELECT * 
-            FROM vacante 
-            WHERE fecha_fin > CURDATE() OR estado <> 'cerrada' 
-            ORDER BY fecha_fin DESC";
-            $resultado = mysqli_query($conn, $sql);
+         FROM vacante 
+         WHERE fecha_fin > CURDATE() OR estado <> 'cerrada' 
+         ORDER BY fecha_fin DESC";
+         $resultado = mysqli_query($conn, $sql);
 }
-
-
 
 ?>
 
