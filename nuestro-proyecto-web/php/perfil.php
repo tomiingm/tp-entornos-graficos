@@ -60,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['cv'])) {
     <title>Perfil</title>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
     <div class="collapse navbar-collapse justify-content-center">
@@ -79,42 +80,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['cv'])) {
 </nav>
 
 <?php
-echo "<p> Nombre: " . $usuario['nombre']. "<p>";
-echo "<p> Apellido: " . $usuario['apellido']. "<p>";
-echo "<p> Documento: " . $usuario['DNI']. "<p>";
-echo "<p> Correo: " . $usuario['mail']. "<p>";
-?>
 
-<!-- Botón para subir CV -->
-<form method="POST" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label for="cv" class="form-label">Seleccionar CV (.pdf):</label>
-        <input class="form-control" type="file" name="cv" id="cv" accept=".pdf" required>
-    </div>
-    <button type="submit" class="btn btn-success">Subir CV</button>
-</form>
 
-<?php if (isset($mensaje)) : ?>
-    <div class="alert alert-info"><?php echo $mensaje; ?></div>
-<?php endif; ?>
 
-<!-- Botón de descarga de CV -->
-<?php if (!empty($usuario['cv']) && file_exists($usuario['cv'])): ?>
-    <div class="mt-3">
-        <a href="<?php echo $usuario['cv']; ?>" class="btn btn-outline-primary" download>
+echo "<div class='container mt-5'>";
+    echo "<h1> " $usuario['nombre']. "," . "</h1> ";
+    echo "<h1> Apellido: " . $usuario['apellido']. "</h1>";
+
+
+
+
+
+
+    echo "<p> Documento: " . $usuario['DNI']. "</p>";
+    echo "<p> Correo: " . $usuario['mail']. "</p>";
+
+
+echo "<form method='POST' enctype='multipart/form-data'>
+        <div class='mb-3'>
+            <label for='cv' class='form-label'>Seleccionar CV (.pdf):</label>
+            <input class='form-control' type='file' name='cv' id='cv' accept='.pdf' required>
+        </div>
+        <button type='submit' class='btn btn-success'>Subir CV</button>
+    </form>";
+
+if (isset($mensaje))
+{
+    echo "<div class='alert alert-info'><?php echo $mensaje; ?></div>";
+}
+    
+if (!empty($usuario['cv']) && file_exists($usuario['cv'])) {
+    echo "<div class='mt-3'>
+            <a href=".$usuario['cv']." class='btn btn-outline-primary' download>
             Descargar CV
         </a>
-    </div>
-<?php else: ?>
-    <div class="mt-3">
-        <p class="text-muted">Aún no subiste tu CV.</p>
-    </div>
-<?php endif; ?>
+    </div>";
 
-<!-- Botón de cerrar sesión -->
-<?php
+    echo "<div class='mt-3'>
+        <p class='text-muted'>Aún no subiste tu CV.</p>
+    </div>";
+};
+    
 echo "<a href='../php/cerrarsesion.php' class='btn btn-danger px-4 mt-3'>Cerrar Sesión</a>";
+
+echo "</div>";
 ?>
+
+
 
 </body>
 </html>
