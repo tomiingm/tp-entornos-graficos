@@ -54,14 +54,27 @@ $sql = "SELECT v.*
 
   <img class="imagen" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="logo-facu">
 
-  <div class="linea">
-    <div class="titulo">
-      <p>Vacantes</p>
-    </div>
-    <div>
-      <input type="text" class="buscar" name="busqueda" id="busqueda" placeholder="Buscar">
-    </div>
+<div class="linea mb-3">
+  <div class="titulo">
+    <p>Vacantes</p>
   </div>
+  <div class="d-flex align-items-center gap-2">
+  <input type="text" class="form-control" name="busqueda" id="busqueda" placeholder="Buscar">
+  <?php if (isset($_SESSION["rol"]) && $_SESSION["rol"] == 2): ?>
+  <select id="filtro-estado" class="form-select w-auto">
+    <option value="">Todas</option>
+    <option value="abierta">Abiertas</option>
+    <option value="cerrada">Cerradas</option>
+    <option value="en revision">En revisión</option>
+  </select>
+
+  <a href="crear_vacante.php" class="btn btn-success px-4 text-nowrap">Crear Vacante</a>
+<?php endif; ?>
+</div>
+
+</div>
+
+
 
   <div class="scroll-vacantes">
     <?php while($unaVacante = mysqli_fetch_assoc($resultado)) { 
@@ -86,19 +99,24 @@ $sql = "SELECT v.*
       .toLowerCase();
   }
 
-  document.getElementById('busqueda').addEventListener('input', function() {
-    const filtro = normalizar(this.value);
+  function filtrarVacantes() {
+    const filtroTexto = normalizar(document.getElementById('busqueda').value);
+    const filtroEstado = document.getElementById('filtro-estado')?.value || '';
     const vacantes = document.querySelectorAll('.vacante');
 
     vacantes.forEach(function(vacante) {
       const descripcion = vacante.querySelector('.descripcion-recortada').textContent;
-      if (normalizar(descripcion).includes(filtro)) {
-        vacante.style.display = 'block';
-      } else {
-        vacante.style.display = 'none';
-      }
+      const estado = vacante.querySelector('.estado').textContent.toLowerCase();
+
+      const coincideTexto = normalizar(descripcion).includes(filtroTexto);
+      const coincideEstado = !filtroEstado || estado.includes(filtroEstado);
+
+      vacante.style.display = (coincideTexto && coincideEstado) ? 'block' : 'none';
     });
-  });
+  }
+
+  document.getElementById('busqueda').addEventListener('input', filtrarVacantes);
+  document.getElementById('filtro-estado')?.addEventListener('change', filtrarVacantes);
 </script>
 
 </body>

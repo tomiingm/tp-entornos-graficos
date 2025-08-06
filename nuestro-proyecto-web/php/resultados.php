@@ -58,7 +58,7 @@ $resultado = mysqli_query($conn, $sql);
 
   <div class="scroll-vacantes">
   <?php while($unaPersona = mysqli_fetch_assoc($resultado)) { 
-    echo "<div class='vacante p-3 mb-4 border rounded'>";
+    echo "<div class='persona vacante p-3 mb-4 border rounded'>";
 
     echo "<p><strong>Nombre:</strong> " . htmlspecialchars($unaPersona["nombre"]) ." ". htmlspecialchars($unaPersona["apellido"]) . "</p>" ;
     echo "<p class='correo'><strong>Correo:</strong> " . htmlspecialchars($unaPersona["mail"]) . "</p>";
@@ -102,8 +102,8 @@ $resultado = mysqli_query($conn, $sql);
     const personas = document.querySelectorAll('.persona');
 
     personas.forEach(function(persona) {
-      const descripcion = persona.querySelector('.descripcion-recortada').textContent;
-      if (normalizar(descripcion).includes(filtro)) {
+      const textoPersona = normalizar(persona.textContent);
+      if (textoPersona.includes(filtro)) {
         persona.style.display = 'block';
       } else {
         persona.style.display = 'none';
