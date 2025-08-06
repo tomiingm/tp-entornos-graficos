@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2025 at 04:02 PM
+-- Generation Time: Aug 06, 2025 at 04:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -72,7 +72,7 @@ CREATE TABLE `persona` (
 INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`, `cv`, `domicilio`, `telefono`, `fotoperfil`) VALUES
 (1, 'admin', 'administrador', 'admin@example.com', '$2y$10$51H.VUNWKPqw3JlllWFUgurgRhLq70D/lZjF6I05TakEonCRs5HsC', 12345678, 1, '', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'),
 (5, 'Francisco', 'Bebo', 'fransbebobruno@gmail.com', '$2y$10$GQ3c/ObU8kLd.3vJD/9lK.zjEu.UhRhpVx/s6KKAnxyrGVT1KKLPG', 40312859, 0, '../uploads/cv_40312859.pdf', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'),
-(6, 'Tomas Malcolm', 'Gigli', 'tomasgigli@yahoo.com.ar', '$2y$10$s0/X9ldOjmkcqeUXjWxkje5mdf.gGlhhBzMoMm1FgcWNo0/oSggPG', 42959191, 0, '../uploads/cv_42959191.pdf', NULL, NULL, 'assets\\images\\public\\tomiprueba.png'),
+(6, 'Tomas Malcolm', 'Gigli', 'tomasgigli@yahoo.com.ar', '$2y$10$s0/X9ldOjmkcqeUXjWxkje5mdf.gGlhhBzMoMm1FgcWNo0/oSggPG', 42959191, 0, '../uploads/cv_42959191.pdf', NULL, NULL, '../assets/images/public/tomiprueba.png'),
 (7, 'Jefe', 'De Catedra', 'jefedecatedra@gmail.com', '$2y$10$EBWE.jCCjNkMt4fG/Vzk4eB.yJ/BF7ll.lzvV4LT1H55D4L/muxaS', 12345677, 2, '', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'),
 (8, 'Cande', 'Gigli', 'candegigli@gmail.com', '$2y$10$1ultIMT1cipOVt7uw0VtF.dCkYupiNdinWOJBFBc/MguiAL4xomw.', 44123123, 0, '../uploads/cv_44123123.pdf', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg');
 

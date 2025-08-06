@@ -12,7 +12,7 @@ require("conection.php");
 $user_id = (int) $_SESSION["usuario_id"];
 
 // Buscar la vacante en la base de datos
-$sql = "SELECT * FROM persona WHERE id = $user_id";
+$sql = "SELECT * FROM persona WHERE ID = $user_id";
 $resultado = mysqli_query($conn, $sql);
 
 if (!$resultado || mysqli_num_rows($resultado) == 0) {
@@ -57,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['cv'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/estilos.css">
     <title>Perfil</title>
 </head>
 <body>
@@ -83,24 +84,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['cv'])) {
 
 
 
-echo "<div class='container mt-5'>";
-    echo "<div class='container d-flex align-items-center'>";
+echo "<div class='container mt-5 border border-light-subtle p-5 rounded-5 shadow-lg'>";
+    echo "<div class='container d-flex align-items-center p-0'>";
     echo "<div class='flex-grow-1'>";
-        echo "<h1> " . $usuario['apellido'] . "," ."</h1>";
-        echo "<h1> " . $usuario['nombre'] ."</h1>";
+        echo "<h1 class='display-1'> " . $usuario['apellido'] . "," ."</h1>";
+        echo "<h1 class='display-1'> " . $usuario['nombre'] ."</h1>";
     echo "</div>";
-        echo "<div>
-                <img src= " . $usuario['fotoperfil'] . " alt='Foto de perfil' class='rounded-circle' style='width: 200px; height: 200px; object-fit: cover;'>
-            </div>";
+    echo "<div>
+        <form action='subirFoto.php' method='post' enctype='multipart/form-data' id='form-upload''>
+            
+            <input type='hidden' name='userId' value= " . $usuario['ID'] . " '>
+
+            <input type='file' name='profilePhoto' id='file-input' style='display: none; cursor:pointer;' accept='image/png, image/jpeg'; >
+            <img src= " . $usuario['fotoperfil'] . " id='profile-image' alt='Foto de perfil' class='rounded-circle cursor:pointer profile-image foto-perfil'>
+        </form>
+            
+        </div>";
     echo "</div>";
 
+    echo "<hr style='border: 1px solid; color: black'>";
 
-
-
-    echo "<p> Documento: " . $usuario['DNI']. "</p>";
-    echo "<p> Correo: " . $usuario['mail']. "</p>";
-    echo "<p> Telefono: " . $usuario['telefono']. "</p>";
-    echo "<p> Domicilio: " . $usuario['domicilio']. "</p>";
+    echo "<div class='p-2'>";
+    echo "<h3 class='display-5'>Datos Personales</h3>";
+        echo "<p> Documento: " . $usuario['DNI']. "</p>";
+        echo "<p> Correo: " . $usuario['mail']. "</p>";
+        echo "<p> Telefono: " . $usuario['telefono']. "</p>";
+        echo "<p> Domicilio: " . $usuario['domicilio']. "</p>";
+    echo "</div>";
+    
 
 
 echo "<form method='POST' enctype='multipart/form-data'>
@@ -134,6 +145,25 @@ echo "</div>";
 ?>
 
 
+
+<script>
+    // Obtenemos los elementos del DOM
+    const profileImage = document.getElementById('profile-image');
+    const fileInput = document.getElementById('file-input');
+    const uploadForm = document.getElementById('form-upload');
+
+    // 1. Cuando se hace clic en la imagen...
+    profileImage.addEventListener('click', () => {
+        // ...simulamos un clic en el input de archivo oculto.
+        fileInput.click();
+    });
+
+    // 2. Cuando el usuario selecciona un archivo...
+    fileInput.addEventListener('change', () => {
+        // ...enviamos el formulario automáticamente.
+        uploadForm.submit();
+    });
+</script>
 
 </body>
 </html>
