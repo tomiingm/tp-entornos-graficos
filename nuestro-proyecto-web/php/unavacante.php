@@ -1,5 +1,6 @@
 <?php
 session_start();
+require("conection.php");
 
 // Redirigir si no está logueado
 if (!isset($_SESSION["usuario_id"])) {
@@ -7,9 +8,9 @@ if (!isset($_SESSION["usuario_id"])) {
     exit();
 }
 
-require("conection.php");
+$usuario_id = (int) $_SESSION["usuario_id"];
 
-// Obtener el ID de la vacante desde la URL
+// Obtener ID de vacante desde URL
 if (!isset($_GET['id'])) {
     echo "ID de vacante no proporcionado.";
     exit();
@@ -17,15 +18,41 @@ if (!isset($_GET['id'])) {
 
 $idVacante = intval($_GET['id']);
 
-// Buscar la vacante en la base de datos
+// Obtener datos del usuario
+$sql_usuario = "SELECT * FROM persona WHERE id = $usuario_id";
+$res_usuario = mysqli_query($conn, $sql_usuario);
+$usuario = mysqli_fetch_assoc($res_usuario);
+
+// Verificar si tiene CV
+$tiene_cv = !empty($usuario['cv']) && file_exists($usuario['cv']);
+
+// Verificar si ya está postulado
+$sql_check_postulacion = "SELECT * FROM postulacion WHERE ID_Persona = $usuario_id AND ID_Vacante = $idVacante";
+$res_postulacion = mysqli_query($conn, $sql_check_postulacion);
+$ya_postulado = mysqli_num_rows($res_postulacion) > 0;
+
+// Procesar postulación si se envió
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["confirmar_postulacion"])) {
+    $fecha = date("Y-m-d");
+
+    $sql_insert = "INSERT INTO postulacion (ID_Persona, ID_Vacante, fecha_hora_post) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql_insert);
+    $stmt->bind_param("iis", $usuario_id, $idVacante, $fecha);
+
+    if ($stmt->execute()) {
+        $ya_postulado = true;
+    }
+
+    $stmt->close();
+}
+
+// Obtener datos de la vacante
 $sql = "SELECT * FROM vacante WHERE id = $idVacante";
 $resultado = mysqli_query($conn, $sql);
-
 if (!$resultado || mysqli_num_rows($resultado) == 0) {
     echo "Vacante no encontrada.";
     exit();
 }
-
 $vacante = mysqli_fetch_assoc($resultado);
 ?>
 
@@ -38,116 +65,97 @@ $vacante = mysqli_fetch_assoc($resultado);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="../css/estilosunavacante.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  
 </head>
-<body >
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-      <div class="collapse navbar-collapse justify-content-center">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link px-4 " href="../index.php">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active rounded-pill px-4 bg-secondary text-white" href="vacantes.php">Vacantes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link px-4" href="../php/perfil.php">Perfil</a>
-          </li>
-        </ul>
-      </div>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <div class="collapse navbar-collapse justify-content-center">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link px-4" href="../index.php">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link active rounded-pill px-4 bg-secondary text-white" href="vacantes.php">Vacantes</a></li>
+        <li class="nav-item"><a class="nav-link px-4" href="../php/perfil.php">Perfil</a></li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
 <div class="contenedor">
-<div class="cabecera">
-  <?php
-  echo "<h2>". $vacante['titulo'] ."</h2>";
-  ?>
- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="imagen">
-</div>
+  <div class="cabecera">
+    <h2><?= htmlspecialchars($vacante['titulo']) ?></h2>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="imagen">
+  </div>
 </div>
 <hr>
 
 <div class="contenedor">
-  
   <div class="columna">
-    <?php
-              
-      echo "<p> ". $vacante['descripcion'] . "</p>";
-      echo "<p><strong>Inicio: </strong> " . $vacante['fecha_ini'] ."</p>";
-      echo "<p><strong>Fin: </strong>" . $vacante['fecha_fin'] ."</p>";
-    ?>
+    <p><?= nl2br(htmlspecialchars($vacante['descripcion'])) ?></p>
+    <p><strong>Inicio:</strong> <?= htmlspecialchars($vacante['fecha_ini']) ?></p>
+    <p><strong>Fin:</strong> <?= htmlspecialchars($vacante['fecha_fin']) ?></p>
   </div>
-
 
   <div class="columna-botones">
-  <div class="contenedor-botones">
-    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] == 0): ?>
-      <form action="crear_postulacion.php" method="post" style="display:inline;">
-        <input type="hidden" name="id_persona" value="<?= $_SESSION['usuario_id'] ?>">
-        <input type="hidden" name="id_vacante" value="<?= $vacante['ID'] ?>">
-        <button type="submit" class="btn btn-primary">Postulate</button>
-      </form>
-    <?php endif; ?>
-
-    <?php if (isset($_SESSION['rol']) && $_SESSION['rol'] == 1): ?>
-      <a href="editar_vacante.php?id=<?= $vacante['ID'] ?>" class="btn btn-warning">Editar</a>
-      <a href="orden_de_merito.php?id=<?= $vacante['ID'] ?>" class="btn btn-info">Orden de Mérito</a>
-      <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
-      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#finalizarModal">Finalizar</button>
-    <?php endif; ?>
-  </div>
-</div>
-
-
-<!-- Modals -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <?php
-          echo "¿Segur@ que quieres postularte a la vacante " . $vacante['titulo'] . " ?";
-        ?>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Confirmar</button>
-      </div>
+    <div class="contenedor-botones">
+      <?php if ($_SESSION['rol'] == 0): ?>
+        <?php if ($ya_postulado): ?>
+          <div class="alert alert-info">Ya estás postulado a esta vacante.</div>
+        <?php elseif (!$tiene_cv): ?>
+          <div class="alert alert-warning">No tienes cargado un Curriculum.</div>
+        <?php else: ?>
+          <!-- Botón que abre el modal -->
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPostulacion">
+            Postulate
+          </button>
+        <?php endif; ?>
+      <?php elseif ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2): ?>
+        <a href="editar_vacante.php?id=<?= $vacante['ID'] ?>" class="btn btn-warning">Editar</a>
+        <a href="orden_de_merito.php?id=<?= $vacante['ID'] ?>" class="btn btn-info">Orden de Mérito</a>
+        <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#finalizarModal">Finalizar</button>
+      <?php endif; ?>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="finalizarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Postulación -->
+<div class="modal fade" id="modalPostulacion" tabindex="-1" aria-labelledby="modalPostulacionLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="POST" class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalPostulacionLabel">Confirmar postulación</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas postularte a <strong><?= htmlspecialchars($vacante['titulo']) ?></strong>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" name="confirmar_postulacion" class="btn btn-primary">Confirmar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Finalizar (solo para admin) -->
+<div class="modal fade" id="finalizarModal" tabindex="-1" aria-labelledby="finalizarModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmación</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="finalizarModalLabel">Finalizar Vacante</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-        <?php
-          echo "¿Segur@ que quieres finalizar a la vacante " . $vacante['titulo'] . " ? ID: " .$vacante['ID'];
-        ?>
+        ¿Estás seguro de que deseas finalizar la vacante <strong><?= htmlspecialchars($vacante['titulo']) ?></strong>?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Confirmar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger">Finalizar</button>
       </div>
     </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
 </body>
-
-
-
-
 </html>

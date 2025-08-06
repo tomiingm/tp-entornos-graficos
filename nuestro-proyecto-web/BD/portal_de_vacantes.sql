@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2025 at 02:00 AM
+-- Generation Time: Aug 05, 2025 at 06:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,8 +40,28 @@ CREATE TABLE `item` (
 
 INSERT INTO `item` (`nro_item`, `ID_Vacante`, `descripcion`, `valor_max`) VALUES
 (2, 2, 'Titulo universitario', 10),
-(5, 4, 'que tan lindo es', 10),
-(6, 4, 'que tan inteligente es', 10);
+(7, 4, 'Trabajo en equipo', 8),
+(8, 4, 'Manejo de Workbench y lenguaje Mysql', 12),
+(10, 1, 'valentía', 10),
+(11, 1, 'limpieza', 50);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jefe_vacante`
+--
+
+CREATE TABLE `jefe_vacante` (
+  `id_jefe` int(11) NOT NULL,
+  `id_vacante` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `jefe_vacante`
+--
+
+INSERT INTO `jefe_vacante` (`id_jefe`, `id_vacante`) VALUES
+(7, 1);
 
 -- --------------------------------------------------------
 
@@ -66,7 +86,10 @@ CREATE TABLE `persona` (
 
 INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`, `cv`) VALUES
 (1, 'admin', 'administrador', 'admin@example.com', '$2y$10$51H.VUNWKPqw3JlllWFUgurgRhLq70D/lZjF6I05TakEonCRs5HsC', 12345678, 1, ''),
-(5, 'Francisco', 'Bebo', 'fransbebobruno@gmail.com', '$2y$10$GQ3c/ObU8kLd.3vJD/9lK.zjEu.UhRhpVx/s6KKAnxyrGVT1KKLPG', 40312859, 0, '');
+(5, 'Francisco', 'Bebo', 'fransbebobruno@gmail.com', '$2y$10$GQ3c/ObU8kLd.3vJD/9lK.zjEu.UhRhpVx/s6KKAnxyrGVT1KKLPG', 40312859, 0, '../uploads/cv_40312859.pdf'),
+(6, 'Tomas Malcolm', 'Gigli', 'tomasgigli@yahoo.com.ar', '$2y$10$s0/X9ldOjmkcqeUXjWxkje5mdf.gGlhhBzMoMm1FgcWNo0/oSggPG', 42959191, 0, '../uploads/cv_42959191.pdf'),
+(7, 'Jefe', 'De Catedra', 'jefedecatedra@gmail.com', '$2y$10$EBWE.jCCjNkMt4fG/Vzk4eB.yJ/BF7ll.lzvV4LT1H55D4L/muxaS', 12345677, 2, ''),
+(8, 'Cande', 'Gigli', 'candegigli@gmail.com', '$2y$10$1ultIMT1cipOVt7uw0VtF.dCkYupiNdinWOJBFBc/MguiAL4xomw.', 44123123, 0, '../uploads/cv_44123123.pdf');
 
 -- --------------------------------------------------------
 
@@ -82,6 +105,16 @@ CREATE TABLE `postulacion` (
   `puntaje` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `postulacion`
+--
+
+INSERT INTO `postulacion` (`ID_Persona`, `ID_Vacante`, `fecha_hora_post`, `resultado`, `puntaje`) VALUES
+(5, 4, '2025-08-05', '', 0),
+(6, 1, '2025-08-05', '', 0),
+(6, 3, '2025-08-05', '', 0),
+(8, 1, '2025-08-05', '', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -94,6 +127,14 @@ CREATE TABLE `resultado_item` (
   `nro_item` int(11) NOT NULL,
   `resultado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `resultado_item`
+--
+
+INSERT INTO `resultado_item` (`ID`, `ID_Vacante`, `nro_item`, `resultado`) VALUES
+(6, 1, 10, 8),
+(6, 1, 11, 28);
 
 -- --------------------------------------------------------
 
@@ -118,7 +159,7 @@ INSERT INTO `vacante` (`ID`, `estado`, `descripcion`, `fecha_ini`, `fecha_fin`, 
 (1, 'abierta', 'La Facultad Regional busca incorporar un/a docente para el dictado de la asignatura Matemática I correspondiente al primer año de la carrera de Ingeniería.\r\nEl/la postulante deberá contar con conocimientos sólidos en álgebra, funciones, límites y cálculo diferencial. Se valorará experiencia previa en docencia universitaria y manejo de herramientas digitales para la enseñanza.\r\nCarga horaria: 6hs.', '2025-06-05', '2025-08-05', 'Profesor/a de Matemática'),
 (2, 'abierta', 'Se requiere un/a profesor/a auxiliar para colaborar en clases prácticas de la materia Matemática Discreta en la carrera de Ingeniería en Sistemas.\r\nEntre las tareas se incluyen: resolución de ejercicios en clase, asistencia en corrección de trabajos prácticos y apoyo a los estudiantes durante consultas.\r\nEs deseable tener conocimientos de lógica proposicional, conjuntos, relaciones, grafos y estructuras algebraicas básicas.\r\nCarga horaria: 4 hs.', '2025-06-25', '2025-08-25', 'Profesor/a Auxiliar de Matemática Discreta'),
 (3, 'abierta', 'Se busca un/a profesor/a para dictar clases teóricas y prácticas de la materia Física I en la carrera de Ingeniería. Se valorará experiencia previa docente y conocimiento en mecánica clásica, cinemática, dinámica y leyes de Newton. Carga horaria: 6 hs semanales.\r\n', '2025-07-01', '2025-08-01', 'Profesor/a de Física I'),
-(4, 'abierta', 'culo de la pija', '2025-07-15', '2025-08-29', 'pija con caca'),
+(4, 'abierta', 'La Facultad Regional busca incorporar un/a docente para el dictado de la asignatura Sistemas de Bases de Datos, correspondiente al tercer año de la carrera de Ingeniería en Sistemas de Información. El/la postulante deberá contar con conocimientos sólidos en modelado relacional, lenguaje SQL, normalización y administración de bases de datos. Carga horaria: 20 hs. semanales.', '2025-07-15', '2025-08-29', 'Profesor de Base de Datos'),
 (5, 'cerrada', 'Vacante para profesor/a responsable del dictado de la asignatura Geometría y Álgebra. El candidato ideal deberá tener conocimientos sólidos en álgebra lineal, matrices, determinantes, espacios vectoriales y geometría analítica. Experiencia docente deseable. Carga horaria: 6 hs semanales.', '2025-01-01', '2025-02-28', 'Profesor/a de Geometría y Álgebra');
 
 --
@@ -131,6 +172,13 @@ INSERT INTO `vacante` (`ID`, `estado`, `descripcion`, `fecha_ini`, `fecha_fin`, 
 ALTER TABLE `item`
   ADD PRIMARY KEY (`nro_item`,`ID_Vacante`),
   ADD KEY `FK_VACANTE2` (`ID_Vacante`);
+
+--
+-- Indexes for table `jefe_vacante`
+--
+ALTER TABLE `jefe_vacante`
+  ADD PRIMARY KEY (`id_jefe`,`id_vacante`),
+  ADD KEY `id_vacante` (`id_vacante`);
 
 --
 -- Indexes for table `persona`
@@ -166,13 +214,13 @@ ALTER TABLE `vacante`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `nro_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `nro_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `vacante`
@@ -189,6 +237,13 @@ ALTER TABLE `vacante`
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `FK_VACANTE2` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `jefe_vacante`
+--
+ALTER TABLE `jefe_vacante`
+  ADD CONSTRAINT `jefe_vacante_ibfk_1` FOREIGN KEY (`id_jefe`) REFERENCES `persona` (`ID`),
+  ADD CONSTRAINT `jefe_vacante_ibfk_2` FOREIGN KEY (`id_vacante`) REFERENCES `vacante` (`ID`);
 
 --
 -- Constraints for table `postulacion`

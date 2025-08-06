@@ -2,7 +2,7 @@
 session_start();
 
 // Verificacion si el usuario está logueado y es admin
-if (!isset($_SESSION["usuario_id"]) || $_SESSION["rol"] != 1) {
+if (!isset($_SESSION["usuario_id"]) || $_SESSION["rol"] == 0) {
     header("Location: login.php");
     exit();
 }

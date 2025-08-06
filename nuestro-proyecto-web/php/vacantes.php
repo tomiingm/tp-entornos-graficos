@@ -13,8 +13,28 @@
 <?php
 require('conection.php');
 
-$sql = "SELECT * FROM vacante WHERE fecha_fin > CURDATE() ORDER BY fecha_fin DESC";
-$resultado = mysqli_query($conn, $sql);
+if (isset($_SESSION["usuario_id"]) and isset($_SESSION["rol"])) {
+
+$idUsuario = $_SESSION['usuario_id'];
+$rolUsuario = $_SESSION['rol'];
+
+if ($_SESSION['rol'] == 2) {
+    $sql = "SELECT v.* 
+            FROM vacante v
+            INNER JOIN jefe_vacante jv ON v.ID = jv.id_vacante
+            WHERE jv.id_jefe = $idUsuario
+            ORDER BY v.fecha_fin DESC";
+            $resultado = mysqli_query($conn, $sql);
+} }else {
+    $sql = "SELECT * 
+            FROM vacante 
+            WHERE fecha_fin > CURDATE() OR estado <> 'cerrada' 
+            ORDER BY fecha_fin DESC";
+            $resultado = mysqli_query($conn, $sql);
+}
+
+
+
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">

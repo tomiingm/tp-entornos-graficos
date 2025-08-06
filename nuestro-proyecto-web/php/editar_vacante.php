@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   mysqli_stmt_execute($stmt);
 
   if (mysqli_stmt_affected_rows($stmt) >= 0) {
-    echo "<script>alert('Vacante actualizada correctamente'); window.location.href='vacantes.php';</script>";
+    header("Location: vacantes.php");
     exit;
   } else {
     echo "Error al actualizar: " . mysqli_error($conn);

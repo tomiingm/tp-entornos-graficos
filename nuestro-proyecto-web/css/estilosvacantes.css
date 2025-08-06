@@ -48,13 +48,16 @@
       border-radius: 4px;
     }
 
-.vacante{
-    height: 200px;
-    width: 100%;
-    border: 1px solid gray;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 15px;
+.vacante {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.vacante a {
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .descripcion-recortada {
