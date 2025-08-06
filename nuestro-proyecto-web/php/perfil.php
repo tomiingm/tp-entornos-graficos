@@ -84,16 +84,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['cv'])) {
 
 
 echo "<div class='container mt-5'>";
-    echo "<h1> " $usuario['nombre']. "," . "</h1> ";
-    echo "<h1> Apellido: " . $usuario['apellido']. "</h1>";
-
-
+    echo "<div class='container d-flex align-items-center'>";
+    echo "<div class='flex-grow-1'>";
+        echo "<h1> " . $usuario['apellido'] . "," ."</h1>";
+        echo "<h1> " . $usuario['nombre'] ."</h1>";
+    echo "</div>";
+        echo "<div>
+                <img src= " . $usuario['fotoperfil'] . " alt='Foto de perfil' class='rounded-circle' style='width: 200px; height: 200px; object-fit: cover;'>
+            </div>";
+    echo "</div>";
 
 
 
 
     echo "<p> Documento: " . $usuario['DNI']. "</p>";
     echo "<p> Correo: " . $usuario['mail']. "</p>";
+    echo "<p> Telefono: " . $usuario['telefono']. "</p>";
+    echo "<p> Domicilio: " . $usuario['domicilio']. "</p>";
 
 
 echo "<form method='POST' enctype='multipart/form-data'>
