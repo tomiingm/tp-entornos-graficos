@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label> <input type="checkbox" value="remember-me"> Recordar mis datos</label>
                     </div> 
                     <button class="w-100 btn btn-lg btn-primary" type="submit">Inicia Sesión</button> 
-                    <hr class="my-4"> <small class="text-body-secondary">La Facultad no es un lujo, es un derecho. Fachito.</small> 
+                    <hr class="my-4"> <small class="text-body-secondary">Texto de Prueba</small> 
                 </form> 
             </div> 
         </div> 
