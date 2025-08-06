@@ -100,7 +100,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-floating mb-3" > 
                     <input type="number" class="form-control" name="dni" id="dni" required min="1000000" max="99999999"  placeholder="Documento (DNI)"> 
                     <label for="dni">Número de Documento (DNI)</label> 
-                </div> 
+                </div>
+                <?php if ($mensaje) { ?>
+                    <div class="text-danger">
+                    <?= htmlspecialchars($mensaje) ?>
+                    </div>
+                    <?php } ?>
                     <div class="form-floating mb-3"> 
                         <input id="clave" type="password" class="form-control" name="clave" placeholder="Contraseña" required> 
                         <label for="clave">Contraseña</label> 

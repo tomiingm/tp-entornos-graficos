@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 06-08-2025 a las 14:12:40
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Aug 06, 2025 at 04:02 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `portal_de_vacantes`
+-- Database: `portal_de_vacantes`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `item`
+-- Table structure for table `item`
 --
 
 CREATE TABLE `item` (
@@ -35,7 +35,7 @@ CREATE TABLE `item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `item`
+-- Dumping data for table `item`
 --
 
 INSERT INTO `item` (`nro_item`, `ID_Vacante`, `descripcion`, `valor_max`) VALUES
@@ -48,7 +48,7 @@ INSERT INTO `item` (`nro_item`, `ID_Vacante`, `descripcion`, `valor_max`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `persona`
+-- Table structure for table `persona`
 --
 
 CREATE TABLE `persona` (
@@ -59,24 +59,27 @@ CREATE TABLE `persona` (
   `clave` varchar(256) NOT NULL,
   `DNI` int(11) NOT NULL,
   `rol` tinyint(1) NOT NULL DEFAULT 0,
-  `cv` varchar(50) NOT NULL
+  `cv` varchar(50) NOT NULL,
+  `domicilio` varchar(50) DEFAULT NULL,
+  `telefono` int(12) DEFAULT NULL,
+  `fotoperfil` text NOT NULL DEFAULT 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `persona`
+-- Dumping data for table `persona`
 --
 
-INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`, `cv`) VALUES
-(1, 'admin', 'administrador', 'admin@example.com', '$2y$10$51H.VUNWKPqw3JlllWFUgurgRhLq70D/lZjF6I05TakEonCRs5HsC', 12345678, 1, ''),
-(5, 'Francisco', 'Bebo', 'fransbebobruno@gmail.com', '$2y$10$GQ3c/ObU8kLd.3vJD/9lK.zjEu.UhRhpVx/s6KKAnxyrGVT1KKLPG', 40312859, 0, '../uploads/cv_40312859.pdf'),
-(6, 'Tomas Malcolm', 'Gigli', 'tomasgigli@yahoo.com.ar', '$2y$10$s0/X9ldOjmkcqeUXjWxkje5mdf.gGlhhBzMoMm1FgcWNo0/oSggPG', 42959191, 0, '../uploads/cv_42959191.pdf'),
-(7, 'Jefe', 'De Catedra', 'jefedecatedra@gmail.com', '$2y$10$EBWE.jCCjNkMt4fG/Vzk4eB.yJ/BF7ll.lzvV4LT1H55D4L/muxaS', 12345677, 2, ''),
-(8, 'Cande', 'Gigli', 'candegigli@gmail.com', '$2y$10$1ultIMT1cipOVt7uw0VtF.dCkYupiNdinWOJBFBc/MguiAL4xomw.', 44123123, 0, '../uploads/cv_44123123.pdf');
+INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`, `cv`, `domicilio`, `telefono`, `fotoperfil`) VALUES
+(1, 'admin', 'administrador', 'admin@example.com', '$2y$10$51H.VUNWKPqw3JlllWFUgurgRhLq70D/lZjF6I05TakEonCRs5HsC', 12345678, 1, '', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'),
+(5, 'Francisco', 'Bebo', 'fransbebobruno@gmail.com', '$2y$10$GQ3c/ObU8kLd.3vJD/9lK.zjEu.UhRhpVx/s6KKAnxyrGVT1KKLPG', 40312859, 0, '../uploads/cv_40312859.pdf', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'),
+(6, 'Tomas Malcolm', 'Gigli', 'tomasgigli@yahoo.com.ar', '$2y$10$s0/X9ldOjmkcqeUXjWxkje5mdf.gGlhhBzMoMm1FgcWNo0/oSggPG', 42959191, 0, '../uploads/cv_42959191.pdf', NULL, NULL, 'assets\\images\\public\\tomiprueba.png'),
+(7, 'Jefe', 'De Catedra', 'jefedecatedra@gmail.com', '$2y$10$EBWE.jCCjNkMt4fG/Vzk4eB.yJ/BF7ll.lzvV4LT1H55D4L/muxaS', 12345677, 2, '', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'),
+(8, 'Cande', 'Gigli', 'candegigli@gmail.com', '$2y$10$1ultIMT1cipOVt7uw0VtF.dCkYupiNdinWOJBFBc/MguiAL4xomw.', 44123123, 0, '../uploads/cv_44123123.pdf', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `postulacion`
+-- Table structure for table `postulacion`
 --
 
 CREATE TABLE `postulacion` (
@@ -88,7 +91,7 @@ CREATE TABLE `postulacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `postulacion`
+-- Dumping data for table `postulacion`
 --
 
 INSERT INTO `postulacion` (`ID_Persona`, `ID_Vacante`, `fecha_hora_post`, `resultado`, `puntaje`) VALUES
@@ -100,7 +103,7 @@ INSERT INTO `postulacion` (`ID_Persona`, `ID_Vacante`, `fecha_hora_post`, `resul
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `resultado_item`
+-- Table structure for table `resultado_item`
 --
 
 CREATE TABLE `resultado_item` (
@@ -111,7 +114,7 @@ CREATE TABLE `resultado_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `resultado_item`
+-- Dumping data for table `resultado_item`
 --
 
 INSERT INTO `resultado_item` (`ID`, `ID_Vacante`, `nro_item`, `resultado`) VALUES
@@ -123,7 +126,7 @@ INSERT INTO `resultado_item` (`ID`, `ID_Vacante`, `nro_item`, `resultado`) VALUE
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `vacante`
+-- Table structure for table `vacante`
 --
 
 CREATE TABLE `vacante` (
@@ -137,7 +140,7 @@ CREATE TABLE `vacante` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `vacante`
+-- Dumping data for table `vacante`
 --
 
 INSERT INTO `vacante` (`ID`, `estado`, `descripcion`, `fecha_ini`, `fecha_fin`, `titulo`, `ID_Jefe`) VALUES
@@ -148,91 +151,93 @@ INSERT INTO `vacante` (`ID`, `estado`, `descripcion`, `fecha_ini`, `fecha_fin`, 
 (5, 'cerrada', 'Vacante para profesor/a responsable del dictado de la asignatura Geometría y Álgebra. El candidato ideal deberá tener conocimientos sólidos en álgebra lineal, matrices, determinantes, espacios vectoriales y geometría analítica. Experiencia docente deseable. Carga horaria: 6 hs semanales.', '2025-01-01', '2025-02-28', 'Profesor/a de Geometría y Álgebra', 7);
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `item`
+-- Indexes for table `item`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`nro_item`,`ID_Vacante`),
   ADD KEY `FK_VACANTE2` (`ID_Vacante`);
 
 --
--- Indices de la tabla `persona`
+-- Indexes for table `persona`
 --
 ALTER TABLE `persona`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `DNI` (`DNI`),
+  ADD UNIQUE KEY `telefono` (`telefono`);
 
 --
--- Indices de la tabla `postulacion`
+-- Indexes for table `postulacion`
 --
 ALTER TABLE `postulacion`
   ADD PRIMARY KEY (`ID_Persona`,`ID_Vacante`,`fecha_hora_post`),
   ADD KEY `FK_VACANTE` (`ID_Vacante`);
 
 --
--- Indices de la tabla `resultado_item`
+-- Indexes for table `resultado_item`
 --
 ALTER TABLE `resultado_item`
   ADD PRIMARY KEY (`ID`,`ID_Vacante`,`nro_item`),
   ADD KEY `ID_Vacante` (`ID_Vacante`,`nro_item`);
 
 --
--- Indices de la tabla `vacante`
+-- Indexes for table `vacante`
 --
 ALTER TABLE `vacante`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_JEFE_DE_CATEDRA` (`ID_Jefe`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `item`
+-- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
   MODIFY `nro_item` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT de la tabla `persona`
+-- AUTO_INCREMENT for table `persona`
 --
 ALTER TABLE `persona`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `vacante`
+-- AUTO_INCREMENT for table `vacante`
 --
 ALTER TABLE `vacante`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `item`
+-- Constraints for table `item`
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `FK_VACANTE2` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `postulacion`
+-- Constraints for table `postulacion`
 --
 ALTER TABLE `postulacion`
   ADD CONSTRAINT `FK_PERSONA` FOREIGN KEY (`ID_Persona`) REFERENCES `persona` (`ID`) ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_VACANTE` FOREIGN KEY (`ID_Vacante`) REFERENCES `vacante` (`ID`) ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `resultado_item`
+-- Constraints for table `resultado_item`
 --
 ALTER TABLE `resultado_item`
   ADD CONSTRAINT `resultado_item_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `persona` (`ID`) ON DELETE CASCADE,
   ADD CONSTRAINT `resultado_item_ibfk_2` FOREIGN KEY (`ID_Vacante`,`nro_item`) REFERENCES `item` (`ID_Vacante`, `nro_item`) ON DELETE CASCADE;
 
 --
--- Filtros para la tabla `vacante`
+-- Constraints for table `vacante`
 --
 ALTER TABLE `vacante`
   ADD CONSTRAINT `FK_JEFE_DE_CATEDRA` FOREIGN KEY (`ID_Jefe`) REFERENCES `persona` (`ID`);
