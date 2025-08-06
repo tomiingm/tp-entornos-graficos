@@ -33,7 +33,7 @@ $sql = "SELECT v.*
 } else {
     $sql = "SELECT * 
          FROM vacante 
-         WHERE fecha_fin > CURDATE() OR estado <> 'cerrada' 
+         WHERE fecha_fin > CURDATE() OR estado = 'abierta' 
          ORDER BY fecha_fin DESC";
          $resultado = mysqli_query($conn, $sql);
 }
