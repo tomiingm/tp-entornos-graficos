@@ -8,6 +8,8 @@ if (!isset($_SESSION["usuario_id"])) {
     exit();
 }
 
+
+
 $usuario_id = (int) $_SESSION["usuario_id"];
 
 // Obtener ID de vacante desde URL
@@ -35,15 +37,22 @@ $ya_postulado = mysqli_num_rows($res_postulacion) > 0;
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["confirmar_postulacion"])) {
     $fecha = date("Y-m-d");
 
-    $sql_insert = "INSERT INTO postulacion (ID_Persona, ID_Vacante, fecha_hora_post) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($sql_insert);
-    $stmt->bind_param("iis", $usuario_id, $idVacante, $fecha);
+    // Escapar los valores para evitar inyecciones
+    $usuario_id_escapado = mysqli_real_escape_string($conn, $usuario_id);
+    $idVacante_escapado = mysqli_real_escape_string($conn, $idVacante);
+    $fecha_escapada = mysqli_real_escape_string($conn, $fecha);
 
-    if ($stmt->execute()) {
+    // Armar y ejecutar la consulta directamente
+    $sql_insert = "INSERT INTO postulacion (ID_Persona, ID_Vacante, fecha_hora_post) 
+                   VALUES ('$usuario_id_escapado', '$idVacante_escapado', '$fecha_escapada')";
+
+    $resultado_insert = mysqli_query($conn, $sql_insert);
+
+    if ($resultado_insert) {
         $ya_postulado = true;
+    } else {
+        echo "Error al insertar la postulación: " . mysqli_error($conn);
     }
-
-    $stmt->close();
 }
 
 // Obtener datos de la vacante
@@ -53,7 +62,28 @@ if (!$resultado || mysqli_num_rows($resultado) == 0) {
     echo "Vacante no encontrada.";
     exit();
 }
+if (isset($_GET['finalizada']) && $_GET['finalizada'] == 1) {
+    echo '<div class="alert alert-success text-center">La vacante se finalizó correctamente.</div>';
+}
+
 $vacante = mysqli_fetch_assoc($resultado);
+if ($vacante['estado'] == "cerrada" and $_SESSION['rol'] == 0){
+  header("Location: vacantes.php");
+} else if ($_SESSION['rol']==2 and $vacante['ID_Jefe'] != $_SESSION['usuario_id'] ) {
+  header("Location: vacantes.php");
+}
+
+// finalizar vacante
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"])) {
+    $sql_finalizar = "UPDATE vacante SET estado = 'cerrada' WHERE ID = $idVacante";
+    if (mysqli_query($conn, $sql_finalizar)) {
+        header("Location: unavacante.php?id=$idVacante&finalizada=1");
+        exit();
+    } else {
+        echo "Error al finalizar la vacante: " . mysqli_error($conn);
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -112,7 +142,11 @@ $vacante = mysqli_fetch_assoc($resultado);
         <a href="editar_vacante.php?id=<?= $vacante['ID'] ?>" class="btn btn-warning">Editar</a>
         <a href="orden_de_merito.php?id=<?= $vacante['ID'] ?>" class="btn btn-info">Orden de Mérito</a>
         <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#finalizarModal">Finalizar</button>
+        <?php 
+          if($vacante['estado'] != "cerrada"){
+         echo "<button type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#finalizarModal'>Finalizar</button>";
+          }
+        ?>
       <?php endif; ?>
     </div>
   </div>
@@ -148,10 +182,13 @@ $vacante = mysqli_fetch_assoc($resultado);
       <div class="modal-body">
         ¿Estás seguro de que deseas finalizar la vacante <strong><?= htmlspecialchars($vacante['titulo']) ?></strong>?
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger">Finalizar</button>
-      </div>
+      <form method="POST">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" name="finalizar_vacante" class="btn btn-danger">Finalizar</button>
+        </div>
+      </form>
+
     </div>
   </div>
 </div>

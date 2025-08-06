@@ -19,8 +19,7 @@ $idUsuario = $_SESSION['usuario_id'];
 $rolUsuario = $_SESSION['rol'];
 $sql = "SELECT v.* 
         FROM vacante v
-        INNER JOIN jefe_vacante jv ON v.ID = jv.id_vacante
-        WHERE jv.id_jefe = $idUsuario
+        WHERE v.ID_Jefe = $idUsuario
         ORDER BY v.fecha_fin DESC";
         $resultado = mysqli_query($conn, $sql);
 } else {
