@@ -123,6 +123,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"]))
     <p><?= nl2br(htmlspecialchars($vacante['descripcion'])) ?></p>
     <p><strong>Inicio:</strong> <?= htmlspecialchars($vacante['fecha_ini']) ?></p>
     <p><strong>Fin:</strong> <?= htmlspecialchars($vacante['fecha_fin']) ?></p>
+    <?php if ($_SESSION['rol'] == 2 && $vacante['estado'] === 'en revision'): ?>
+        <div class="alert alert-warning text-center mt-2">
+          La vacante se encuentra actualmente en revisión. Si desea extender la fecha de cierre debe editar la vacante.
+        </div>
+<?php endif; ?>
   </div>
 
   <div class="columna-botones">

@@ -13,6 +13,14 @@
 <?php
 require('conection.php');
 
+$hoy = date('Y-m-d');
+$sqlActualizar = "UPDATE vacante 
+                  SET estado = 'en revision' 
+                  WHERE estado = 'abierta' AND fecha_fin < ?";
+$stmtActualizar = mysqli_prepare($conn, $sqlActualizar);
+mysqli_stmt_bind_param($stmtActualizar, "s", $hoy);
+mysqli_stmt_execute($stmtActualizar);
+
 if (isset($_SESSION["usuario_id"]) and isset($_SESSION["rol"]) and $_SESSION["rol"]==2 ) {
 
 $idUsuario = $_SESSION['usuario_id'];
@@ -84,7 +92,26 @@ $sql = "SELECT v.*
       $fechaOriginal = $unaVacante["fecha_fin"];
       $fechaConFormato = date("d-m-Y", strtotime($fechaOriginal));
       echo "<p class='fecha'> Fecha finalización: " . $fechaConFormato . "</p>";
-      echo "<p class='estado'> Estado: " . htmlspecialchars($unaVacante["estado"]) . "</p>";
+      echo "<br>";
+      $estado = $unaVacante["estado"];
+      $claseEstado = '';
+
+     switch ($estado) {
+         case 'abierta':
+             $claseEstado = 'text-success';
+             break;
+         case 'cerrada':
+             $claseEstado = 'text-danger';
+             break;
+         case 'en revision':
+             $claseEstado = 'text-warning';
+             break;
+         default:
+             $claseEstado = 'text-secondary';
+     }
+
+      echo "<p class='estado fw-bold'>Estado: <span class='$claseEstado'>" . ucfirst($estado) . "</span></p>";
+      echo "<br>";
       echo "<a class='ver-mas' href='unavacante.php?id=" . $unaVacante['ID'] . "'>Ver más</a>";
       echo "</div>";
     } ?>
