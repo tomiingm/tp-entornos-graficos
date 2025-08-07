@@ -55,43 +55,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_item_id'])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body class="container py-4">
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <div class="collapse navbar-collapse justify-content-center">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link px-4" href="../index.php">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link rounded-pill active px-4 bg-secondary text-white" href="../php/vacantes.php">Vacantes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link px-4" href="../php/perfil.php">Perfil</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-4">
 
   <?php
   if ($resultado2 && mysqli_num_rows($resultado2) > 0) {
     $vacante = mysqli_fetch_assoc($resultado2);
     echo "<h2>Orden de Mérito - Vacante #". $idVacante ." : " .$vacante['titulo']."</h2>" ;
-} else {
+  } else {
     echo "<p>No se encontró la vacante.</p>";
-}
+  }
   echo "<hr>";
   ?>
 
   <table class="table table-bordered">
     <thead>
-  <tr>
-    <th>Descripción</th>
-    <th>Puntaje Máximo</th>
-    <th> </th>
-  </tr>
-</thead>
+      <tr>
+        <th>Descripción</th>
+        <th>Puntaje Máximo</th>
+        <th> </th>
+      </tr>
+    </thead>
     <tbody>
-      <tbody>
-  <?php while ($item = mysqli_fetch_assoc($resultado)): ?>
-    <tr>
-      <td><?= htmlspecialchars($item['descripcion']) ?></td>
-      <td><?= $item['valor_max'] ?></td>
-      <td>
-        <form method="post" action="orden_de_merito.php?id=<?= $idVacante ?>" style="display:inline;">
-          <input type="hidden" name="eliminar_item_id" value="<?= $item['nro_item'] ?>">
-          <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
-  <i class="bi bi-trash-fill text-white"></i>
-</button>
-        </form>
-      </td>
-    </tr>
-  <?php endwhile; ?>
-</tbody>
+      <?php while ($item = mysqli_fetch_assoc($resultado)): ?>
+      <tr>
+        <td><?= htmlspecialchars($item['descripcion']) ?></td>
+        <td><?= $item['valor_max'] ?></td>
+        <td>
+          <form method="post" action="orden_de_merito.php?id=<?= $idVacante ?>" style="display:inline;">
+            <input type="hidden" name="eliminar_item_id" value="<?= $item['nro_item'] ?>">
+            <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+              <i class="bi bi-trash-fill text-white"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      <?php endwhile; ?>
     </tbody>
   </table>
 
@@ -108,5 +126,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_item_id'])) {
     </div>
   </form>
 
+<br>
+<a href="unavacante.php?id=<?= $idVacante ?>" class="btn btn-secondary">Volver</a>
+</div>
 </body>
 </html>

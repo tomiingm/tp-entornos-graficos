@@ -1,24 +1,23 @@
 <?php
-session_start();
 require('conection.php');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $idVacante = intval($_POST["id_vacante"]);
-    $idPersona = intval($_POST["id_persona"]);
-    $puntajes = $_POST["puntajes"]; // array asociativo: [nro_item => valor]
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $idVacante = intval($_POST['id_vacante']);
+    $idPersona = intval($_POST['id_persona']);
+    $puntajes = $_POST['puntajes'] ?? [];
 
-    foreach ($puntajes as $nro_item => $resultado) {
+    foreach ($puntajes as $nro_item => $puntaje) {
         $nro_item = intval($nro_item);
-        $resultado = intval($resultado);
+        $puntaje = intval($puntaje);
 
-        // Insertar en resultado_item
-        $sql = "INSERT INTO resultado_item (ID, ID_Vacante, nro_item, resultado)
-                VALUES ($idPersona, $idVacante, $nro_item, $resultado)";
+        $sql = "INSERT INTO resultado_item (ID_Vacante, ID, nro_item, resultado)
+                VALUES ($idVacante, $idPersona, $nro_item, $puntaje)
+                ON DUPLICATE KEY UPDATE resultado = $puntaje";
+
         mysqli_query($conn, $sql);
     }
 
-    // Redirigir a la página anterior (opcional)
-    header("Location: vacantes.php");
+    header("Location: resultados.php?id=$idVacante");
     exit();
 }
 ?>

@@ -64,6 +64,7 @@ $resultado = mysqli_query($conn, $sql);
     echo "<p class='correo'><strong>Correo:</strong> " . htmlspecialchars($unaPersona["mail"]) . "</p>";
     echo "<p class='documento'><strong>DNI:</strong> " . htmlspecialchars($unaPersona["DNI"]) . "</p>";
 
+    if ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2) {
     echo "<div class='mt-2'>";
     echo "<a href='" . htmlspecialchars($unaPersona['cv']) . "' class='btn btn-outline-primary' download>Descargar CV</a>";
     echo "</div>";
@@ -71,6 +72,7 @@ $resultado = mysqli_query($conn, $sql);
     echo "<div class='mt-2'>";
     echo "<a href='resultado_item.php?id_persona=" . urlencode($unaPersona['ID']) . "&id_vacante=" . urlencode($idVacante) . "' class='btn btn-outline-success'>Asignar puntaje</a>";
     echo "</div>";
+  }
 
     $idPersona = intval($unaPersona['ID']);
     $queryPuntaje = "SELECT SUM(resultado) AS total FROM resultado_item WHERE ID = $idPersona AND ID_Vacante = $idVacante";

@@ -146,13 +146,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"]))
       <?php elseif ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2): ?>
         <a href="editar_vacante.php?id=<?= $vacante['ID'] ?>" class="btn btn-warning">Editar</a>
         <a href="orden_de_merito.php?id=<?= $vacante['ID'] ?>" class="btn btn-info">Orden de Mérito</a>
-        <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
         <?php 
           if($vacante['estado'] != "cerrada"){
          echo "<button type='button' class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#finalizarModal'>Finalizar</button>";
           }
         ?>
       <?php endif; ?>
+      <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
     </div>
   </div>
 </div>
