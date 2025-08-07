@@ -1,35 +1,40 @@
 <?php
-require('conection.php');
 session_start();
 
-// Validar sesión de jefe
-if (!isset($_SESSION["usuario_id"]) || $_SESSION["rol"] != 2) {
-  echo "Acceso no autorizado.";
-  exit;
+if (!isset($_SESSION["usuario_id"])) {
+    header("Location: login.php");
+    exit();
 }
 
-$idJefe = $_SESSION["usuario_id"];
+require("conection.php");
 
-// Si se envió el formulario
+// Obtener jefes de cátedra (rol = 2)
+$sqlJefes = "SELECT id, nombre, apellido FROM persona WHERE rol = 2";
+$resJefes = mysqli_query($conn, $sqlJefes);
+$jefesdecatedra = mysqli_fetch_all($resJefes, MYSQLI_ASSOC);
+
+// Procesar formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $titulo = $_POST['titulo'];
-  $descripcion = $_POST['descripcion'];
-  $estado = "abierta"; // estado fijo
-  $fecha_ini = $_POST['fecha_ini'];
-  $fecha_fin = $_POST['fecha_fin'];
+    $titulo = mysqli_real_escape_string($conn, $_POST["titulo"]);
+    $descripcion = mysqli_real_escape_string($conn, $_POST["descripcion"]);
+    $fecha_ini = $_POST["fecha_ini"];
+    $fecha_fin = $_POST["fecha_fin"];
+    $jefe_catedra_id = intval($_POST["jefe_catedra"]);
+    if ($fecha_ini > date('Y-m-d')){
+      $estado = "sin abrir";
+    } else {
+      $estado = "abierta";
+    }
 
-  $sql = "INSERT INTO vacante (titulo, descripcion, estado, fecha_ini, fecha_fin, ID_Jefe)
-          VALUES (?, ?, ?, ?, ?, ?)";
-  $stmt = mysqli_prepare($conn, $sql);
-  mysqli_stmt_bind_param($stmt, "sssssi", $titulo, $descripcion, $estado, $fecha_ini, $fecha_fin, $idJefe);
-  $ok = mysqli_stmt_execute($stmt);
-
-  if ($ok) {
-    header("Location: vacantes.php");
-    exit;
-  } else {
-    echo "Error al crear la vacante: " . mysqli_error($conn);
-  }
+    $sqlInsert = "INSERT INTO vacante (titulo, descripcion, fecha_ini, fecha_fin, ID_Jefe, estado)
+                  VALUES ('$titulo', '$descripcion', '$fecha_ini', '$fecha_fin', $jefe_catedra_id, '$estado')";
+    
+    if (mysqli_query($conn, $sqlInsert)) {
+        header("Location: vacantes.php");
+        exit();
+    } else {
+        echo "Error al crear la vacante: " . mysqli_error($conn);
+    }
 }
 ?>
 
@@ -42,30 +47,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="container py-4">
 
-  <h2 class="mb-4">Crear Nueva Vacante</h2>
+  <h2>Crear Nueva Vacante</h2>
+  <form method="POST" action="crear_vacante.php" class="mt-4">
 
-  <form method="POST" action="">
     <div class="mb-3">
-      <label class="form-label">Título</label>
-      <input type="text" name="titulo" class="form-control" required>
+      <label for="titulo" class="form-label">Título</label>
+      <input type="text" class="form-control" id="titulo" name="titulo" required>
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Descripción</label>
-      <textarea name="descripcion" class="form-control" rows="4" required></textarea>
+      <label for="descripcion" class="form-label">Descripción</label>
+      <textarea class="form-control" id="descripcion" name="descripcion" rows="4" required></textarea>
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Fecha de inicio</label>
-      <input type="date" name="fecha_ini" class="form-control" required>
+      <label for="fecha_ini" class="form-label">Fecha de Inicio</label>
+      <input type="date" class="form-control" id="fecha_ini" name="fecha_ini" required>
     </div>
 
     <div class="mb-3">
-      <label class="form-label">Fecha de finalización</label>
-      <input type="date" name="fecha_fin" class="form-control" required>
+      <label for="fecha_fin" class="form-label">Fecha de Fin</label>
+      <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" required>
     </div>
 
-    <button type="submit" class="btn btn-success">Crear Vacante</button>
+    <div class="mb-3">
+      <label for="jefe_catedra" class="form-label">Jefe de Cátedra</label>
+      <select class="form-select" id="jefe_catedra" name="jefe_catedra" required>
+        <option value="" disabled selected>Seleccione un jefe de cátedra</option>
+        <?php foreach ($jefesdecatedra as $jefe): ?>
+          <option value="<?= $jefe['id'] ?>">
+            <?= htmlspecialchars($jefe['nombre'] . ' ' . $jefe['apellido']) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear Vacante</button>
     <a href="vacantes.php" class="btn btn-secondary">Cancelar</a>
   </form>
 
