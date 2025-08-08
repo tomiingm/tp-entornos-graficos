@@ -87,3 +87,25 @@
 .boton_flecha{
   margin: 20px;
 }
+
+
+
+/* body::before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+
+    background-image: url('https://www.alumnos.frro.utn.edu.ar/fondo.gif');
+    background-repeat: repeat;
+    background-attachment: fixed;
+    z-index: -1000000;
+    background-size: 80px 80px;
+    
+
+    opacity: 0.6;
+
+} */

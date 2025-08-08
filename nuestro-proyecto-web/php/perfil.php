@@ -161,8 +161,6 @@ if (!empty($usuario['cv']) && file_exists($usuario['cv'])) {
     echo "<div class='mt-3'>
         <p class='text-muted'>Aún no subiste tu CV.</p>
     </div>";
-
-
 };
 
 echo '</div>';
