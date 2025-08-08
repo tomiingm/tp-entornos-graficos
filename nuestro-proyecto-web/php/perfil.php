@@ -107,7 +107,7 @@ echo "<div class='container mt-5 border border-light-subtle p-5 rounded-5 shadow
     
     echo "<hr class='my-3 border-dark opacity-50'>";
     
-    echo "<div class='row justify-content-center' id='datos-perfil'>";
+    echo "<div class='row' id='datos-perfil'>";
 
         echo "<div class='col-auto'>";
             echo "<i class='bi bi-person-vcard-fill'></i> " . $usuario['DNI'];
@@ -127,12 +127,15 @@ echo "<div class='container mt-5 border border-light-subtle p-5 rounded-5 shadow
 
     echo "</div>";
 
+    echo "<br>";
+
 
 
 // idea: poner un boton de editar datos que te permita editar domicilio y telefono.
 
 
 echo "<form method='POST' enctype='multipart/form-data' class='mt-4'>
+    <label for='cv' class='form-label'>Subir CV (PDF):</label>
     <div class='input-group'>
         <input class='form-control' type='file' name='cv' id='cv' accept='pdf' required>
         <button type='submit' class='btn btn-success'>
@@ -151,16 +154,18 @@ echo "<div class='d-flex justify-content-between align-items-center'>";
 if (!empty($usuario['cv']) && file_exists($usuario['cv'])) {
     echo "<div class='mt-3'>
             <a href=".$usuario['cv']." class='btn btn-outline-primary' download>
-            Descargar CV
+            <i class='bi bi-download'></i> Descargar CV
         </a>
     </div>";
-
+    } else {
     echo "<div class='mt-3'>
         <p class='text-muted'>Aún no subiste tu CV.</p>
     </div>";
+
+
 };
 
-echo "</div>";
+echo '</div>';
 
 
 echo "<div class='text-end mt-4 border-top pt-3'>
@@ -168,6 +173,7 @@ echo "<div class='text-end mt-4 border-top pt-3'>
         <i class='bi bi-box-arrow-right'></i> Cerrar Sesión
     </a>
 </div>"
+
 
 
 
