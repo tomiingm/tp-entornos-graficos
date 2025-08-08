@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2025 at 04:14 PM
+-- Generation Time: Aug 08, 2025 at 10:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -61,7 +61,7 @@ CREATE TABLE `persona` (
   `rol` tinyint(1) NOT NULL DEFAULT 0,
   `cv` varchar(50) NOT NULL,
   `domicilio` varchar(50) DEFAULT NULL,
-  `telefono` int(12) DEFAULT NULL,
+  `telefono` bigint(13) DEFAULT NULL,
   `fotoperfil` text NOT NULL DEFAULT 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -72,7 +72,7 @@ CREATE TABLE `persona` (
 INSERT INTO `persona` (`ID`, `nombre`, `apellido`, `mail`, `clave`, `DNI`, `rol`, `cv`, `domicilio`, `telefono`, `fotoperfil`) VALUES
 (1, 'admin', 'administrador', 'admin@example.com', '$2y$10$51H.VUNWKPqw3JlllWFUgurgRhLq70D/lZjF6I05TakEonCRs5HsC', 12345678, 1, '', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'),
 (5, 'Francisco', 'Bebo', 'fransbebobruno@gmail.com', '$2y$10$GQ3c/ObU8kLd.3vJD/9lK.zjEu.UhRhpVx/s6KKAnxyrGVT1KKLPG', 40312859, 0, '../uploads/cv_40312859.pdf', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'),
-(6, 'Tomas Malcolm', 'Gigli', 'tomasgigli@yahoo.com.ar', '$2y$10$s0/X9ldOjmkcqeUXjWxkje5mdf.gGlhhBzMoMm1FgcWNo0/oSggPG', 42959191, 0, '../uploads/cv_42959191.pdf', NULL, NULL, '../assets/images/public/tomiprueba.png'),
+(6, 'Tomas Malcolm', 'Gigli', 'tomasgigli@yahoo.com.ar', '$2y$10$s0/X9ldOjmkcqeUXjWxkje5mdf.gGlhhBzMoMm1FgcWNo0/oSggPG', 42959191, 0, '../uploads/cv_42959191.pdf', 'Montana', 3413524459, '../uploads/images/user_6_6896052cbe85f0.80428639.jpg'),
 (7, 'Jefe', 'De Catedra', 'jefedecatedra@gmail.com', '$2y$10$EBWE.jCCjNkMt4fG/Vzk4eB.yJ/BF7ll.lzvV4LT1H55D4L/muxaS', 12345677, 2, '', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg'),
 (8, 'Cande', 'Gigli', 'candegigli@gmail.com', '$2y$10$1ultIMT1cipOVt7uw0VtF.dCkYupiNdinWOJBFBc/MguiAL4xomw.', 44123123, 0, '../uploads/cv_44123123.pdf', NULL, NULL, 'https://whitedotpublishers.com/wp-content/uploads/2022/05/male-placeholder-image.jpeg');
 
@@ -144,7 +144,7 @@ CREATE TABLE `vacante` (
 --
 
 INSERT INTO `vacante` (`ID`, `estado`, `descripcion`, `fecha_ini`, `fecha_fin`, `titulo`, `ID_Jefe`) VALUES
-(1, 'abierta', 'La Facultad Regional busca incorporar un/a docente para el dictado de la asignatura Matemática I correspondiente al primer año de la carrera de Ingeniería.\r\nEl/la postulante deberá contar con conocimientos sólidos en álgebra, funciones, límites y cálculo diferencial. Se valorará experiencia previa en docencia universitaria y manejo de herramientas digitales para la enseñanza.\r\nCarga horaria: 6hs.', '2025-06-05', '2025-08-05', 'Profesor/a de Matemática', 7),
+(1, 'en revision', 'La Facultad Regional busca incorporar un/a docente para el dictado de la asignatura Matemática I correspondiente al primer año de la carrera de Ingeniería.\r\nEl/la postulante deberá contar con conocimientos sólidos en álgebra, funciones, límites y cálculo diferencial. Se valorará experiencia previa en docencia universitaria y manejo de herramientas digitales para la enseñanza.\r\nCarga horaria: 6hs.', '2025-06-05', '2025-08-05', 'Profesor/a de Matemática', 7),
 (2, 'abierta', 'Se requiere un/a profesor/a auxiliar para colaborar en clases prácticas de la materia Matemática Discreta en la carrera de Ingeniería en Sistemas.\r\nEntre las tareas se incluyen: resolución de ejercicios en clase, asistencia en corrección de trabajos prácticos y apoyo a los estudiantes durante consultas.\r\nEs deseable tener conocimientos de lógica proposicional, conjuntos, relaciones, grafos y estructuras algebraicas básicas.\r\nCarga horaria: 4 hs.', '2025-06-25', '2025-08-25', 'Profesor/a Auxiliar de Matemática Discreta', 7),
 (3, 'cerrada', 'Se busca un/a profesor/a para dictar clases teóricas y prácticas de la materia Física I en la carrera de Ingeniería. Se valorará experiencia previa docente y conocimiento en mecánica clásica, cinemática, dinámica y leyes de Newton. Carga horaria: 6 hs semanales.\r\n', '2025-07-01', '2025-08-01', 'Profesor/a de Física I', 7),
 (4, 'abierta', 'La Facultad Regional busca incorporar un/a docente para el dictado de la asignatura Sistemas de Bases de Datos, correspondiente al tercer año de la carrera de Ingeniería en Sistemas de Información. El/la postulante deberá contar con conocimientos sólidos en modelado relacional, lenguaje SQL, normalización y administración de bases de datos. Carga horaria: 20 hs. semanales.', '2025-07-15', '2025-08-29', 'Profesor de Base de Datos', 7),
