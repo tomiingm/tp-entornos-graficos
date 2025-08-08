@@ -24,9 +24,11 @@ session_start();
           <li class="nav-item">
             <a class="nav-link px-4" href="php/vacantes.php">Vacantes</a>
           </li>
+          <?php if (isset($_SESSION["usuario_id"])): ?>
           <li class="nav-item">
-            <a class="nav-link px-4" href="php/perfil.php">Perfil</a>
+            <a class="nav-link px-4" href="../php/perfil.php">Perfil</a>
           </li>
+          <?php endif; ?>
         </ul>
       </div>
     </div>

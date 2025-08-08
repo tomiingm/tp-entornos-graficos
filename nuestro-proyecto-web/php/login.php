@@ -51,7 +51,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 ?>
-<body class="bg-body-secondary d-flex align-items-center vh-100">
+<body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <div class="collapse navbar-collapse justify-content-center">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active rounded-pill px-4 bg-secondary text-white" href="../index.php">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-4" href="vacantes.php">Vacantes</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="bg-body-secondary d-flex align-items-center vh-100">
     <!-- <div class="container contenedor">
         <div class="row justify-content-md-center">
             <div class="col text-end">
@@ -118,6 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div> 
         </div> 
     </div>
+                </div>
 </body>
 
 

@@ -23,9 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = password_hash($_POST["clave"], PASSWORD_DEFAULT); //Encriptacion
     $dni = $_POST["dni"];
     $mail = $_POST["mail"];
+    $domicilio = $_POST["domicilio"];
+    $telefono = $_POST["telefono"];
     $rol = $_POST["rol"];
 
-    $sql = "INSERT INTO persona (nombre, apellido, mail, clave, DNI, rol) VALUES ('$nombre','$apellido','$mail','$password','$dni','$rol')";
+    $sql = "INSERT INTO persona (nombre, apellido, mail, clave, DNI, rol, domicilio, telefono) 
+            VALUES ('$nombre','$apellido','$mail','$password','$dni','$rol','$domicilio','$telefono')";
+
 
     if (mysqli_query($conn, $sql)) {
         $mensaje = "¡Registro exitoso!";
@@ -36,7 +40,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 ?>
-<body class="bg-light">
+<body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <div class="collapse navbar-collapse justify-content-center">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active rounded-pill px-4 bg-secondary text-white" href="../index.php">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-4" href="vacantes.php">Vacantes</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
     <div class="container contenedor">
         <div class="row justify-content-md-center">
             <div class="col text-end">
@@ -69,6 +87,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="mb-3">
                             <label for="mail" class="form-label">E-mail:</label>
                             <input type="email" class="form-control" name="mail" id="mail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="domicilio" class="form-label">Domicilio:</label>
+                            <input type="text" class="form-control" name="domicilio" id="domicilio">
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono:</label>
+                            <input type="text" class="form-control" name="telefono" id="telefono">
                         </div>
                         <div class="mb-3">
                             <label for="clave" class="form-label">Clave:</label>

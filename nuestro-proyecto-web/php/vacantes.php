@@ -57,9 +57,11 @@ $sql = "SELECT v.*
         <li class="nav-item">
           <a class="nav-link rounded-pill active px-4 bg-secondary text-white" href="../php/vacantes.php">Vacantes</a>
         </li>
-        <li class="nav-item">
+        <?php if (isset($_SESSION["usuario_id"])): ?>
+          <li class="nav-item">
             <a class="nav-link px-4" href="../php/perfil.php">Perfil</a>
           </li>
+        <?php endif; ?>
       </ul>
     </div>
   </div>
