@@ -57,6 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['cv'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/perfil.css">
     <link rel="stylesheet" href="../css/estilos.css">
     <title>Perfil</title>
 </head>
@@ -84,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['cv'])) {
 
 
 
-echo "<div class='container mt-5 border border-light-subtle p-5 rounded-5 shadow-lg'>";
+echo "<div class='container mt-5 border border-light-subtle p-5 rounded-5 shadow-lg card bg-white p-4'>";
     echo "<div class='container d-flex align-items-center p-0'>";
     echo "<div class='flex-grow-1'>";
         echo "<h1 class='display-1'> " . $usuario['apellido'] . "," ."</h1>";
@@ -102,31 +104,50 @@ echo "<div class='container mt-5 border border-light-subtle p-5 rounded-5 shadow
         </div>";
     echo "</div>";
 
-    echo "<hr style='border: 1px solid; color: black'>";
-
-    echo "<div class='p-2'>";
-    echo "<h3 class='display-5'>Datos Personales</h3>";
-        echo "<p> Documento: " . $usuario['DNI']. "</p>";
-        echo "<p> Correo: " . $usuario['mail']. "</p>";
-        echo "<p> Telefono: " . $usuario['telefono']. "</p>";
-        echo "<p> Domicilio: " . $usuario['domicilio']. "</p>";
-    echo "</div>";
     
+    echo "<hr class='my-3 border-dark opacity-50'>";
+    
+    echo "<div class='row justify-content-center' id='datos-perfil'>";
+
+        echo "<div class='col-auto'>";
+            echo "<i class='bi bi-person-vcard-fill'></i> " . $usuario['DNI'];
+        echo "</div>";
+
+        echo "<div class='col-auto'>";
+            echo "<i class='bi bi-envelope-at-fill'></i> " . $usuario['mail'];
+        echo "</div>";
+
+        echo "<div class='col-auto'>";
+            echo "<i class='bi bi-telephone-fill'></i> " . $usuario['telefono'];
+        echo "</div>";
+
+        echo "<div class='col-auto'>";
+            echo "<i class='bi bi-house-door-fill'></i> " . $usuario['domicilio'];
+        echo "</div>";
+
+    echo "</div>";
 
 
-echo "<form method='POST' enctype='multipart/form-data'>
-        <div class='mb-3'>
-            <label for='cv' class='form-label'>Seleccionar CV (.pdf):</label>
-            <input class='form-control' type='file' name='cv' id='cv' accept='.pdf' required>
-        </div>
-        <button type='submit' class='btn btn-success'>Subir CV</button>
-    </form>";
+
+// idea: poner un boton de editar datos que te permita editar domicilio y telefono.
+
+
+echo "<form method='POST' enctype='multipart/form-data' class='mt-4'>
+    <div class='input-group'>
+        <input class='form-control' type='file' name='cv' id='cv' accept='pdf' required>
+        <button type='submit' class='btn btn-success'>
+            <i class='bi bi-upload'></i> Subir CV
+        </button>
+    </div>
+</form>";
 
 if (isset($mensaje))
 {
     echo "<div class='alert alert-info'><?php echo $mensaje; ?></div>";
 }
-    
+
+echo "<div class='d-flex justify-content-between align-items-center'>";
+
 if (!empty($usuario['cv']) && file_exists($usuario['cv'])) {
     echo "<div class='mt-3'>
             <a href=".$usuario['cv']." class='btn btn-outline-primary' download>
@@ -138,10 +159,20 @@ if (!empty($usuario['cv']) && file_exists($usuario['cv'])) {
         <p class='text-muted'>Aún no subiste tu CV.</p>
     </div>";
 };
-    
-echo "<a href='../php/cerrarsesion.php' class='btn btn-danger px-4 mt-3'>Cerrar Sesión</a>";
 
 echo "</div>";
+
+
+echo "<div class='text-end mt-4 border-top pt-3'>
+    <a href='../php/cerrarsesion.php' class='btn btn-danger'>
+        <i class='bi bi-box-arrow-right'></i> Cerrar Sesión
+    </a>
+</div>"
+
+
+
+
+
 ?>
 
 
