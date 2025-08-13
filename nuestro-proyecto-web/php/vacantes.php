@@ -71,7 +71,7 @@ $sql = "SELECT v.*
 
 <div class="container">
 
-  <img class="imagen" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="logo-facu">
+  <img id="image-utn2" src="../assets/images/UTN-Logo-M2.png" alt="Logo Universidad" >
 
 <div class="linea mb-3">
   <div class="titulo">

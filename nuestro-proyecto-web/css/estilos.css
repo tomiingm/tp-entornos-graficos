@@ -54,15 +54,27 @@ body::before {
     height: 200px;
 }
 
+#image-utn2 {
+    width: 500px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
 
 @media (max-width: 576px) {
     #image-utn {
-        /* Estilo que se aplica solo en pantallas grandes */
         width: 350px;
         height: 120px;
 
         margin-bottom: 20px;
     }
+
+    #image-utn2 {
+        width: 350px;
+        height: 120px;
+
+        margin-bottom: 20px;
+}
 
 }
 
