@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/nuestro-proyecto-web/css/estilos.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -52,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <div class="collapse navbar-collapse justify-content-center">
         <ul class="navbar-nav">
@@ -66,52 +65,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     </div>
   </nav>
-  <div class="bg-body-secondary d-flex align-items-center vh-100">
-    <!-- <div class="container contenedor">
-        <div class="row justify-content-md-center">
-            <div class="col text-end">
-                <a href="../index.php" class="btn btn-light rounded-circle shadow-sm ">
-                    <i class="bi bi-arrow-left"></i>
-                </a>
-            </div>
-            <div class="container col-8">
-
-                <div class="formulario-box shadow">
-                    <h2 class="text-center mb-4">Iniciar Sesión</h2>
-                    <?php if ($mensaje) { ?>
-                    <div class="alert alert-danger">
-                    <?= htmlspecialchars($mensaje) ?>
-                    </div>
-                    <?php } ?>
-                    <form action="login.php" method="post">
-                        <div class="mb-3">
-                            <label for="dni" class="form-label ">Número de Documento (DNI):</label>
-                            <input type="number" class="form-control sin-flechas" name="dni" id="dni" required min="1000000" max="99999999" >
-                        </div>
-                        <div class="mb-3">
-                            <label for="clave" class="form-label">Clave:</label>
-                            <input type="password" class="form-control" name="clave" id="clave" required>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div> -->
-
-
+  <div class=" d-flex align-items-center vh-100">
     <div class="container col-xl-10 col-xxl-8 px-4"> 
     <div class="row align-items-center g-lg-5"> 
         
         <div class="col-lg-7 text-center text-lg-start"> 
-            <img src="/nuestro-proyecto-web/assets/images/UTN-Logo-M.png" alt="Logo Universidad" class="logo-facu" >
+            <img src="/nuestro-proyecto-web/assets/images/UTN-Logo-M.png" alt="Logo Universidad" class="logo-facu" id="image-utn" >
         </div> 
+
         <div class="col-md-10 mx-auto col-lg-5">
             
-            <form action="login.php" method="post" class="p-4 p-md-5 border rounded-3 bg-body-tertiary"> 
+            <form action="login.php" method="post" class="p-4 p-md-5 border rounded-3 bg-body-tertiary shadow-lg"> 
                 <div class="form-floating mb-3" > 
                     <input type="number" class="form-control" name="dni" id="dni" required min="1000000" max="99999999"  placeholder="Documento (DNI)"> 
                     <label for="dni">Número de Documento (DNI)</label> 
@@ -127,8 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div> <div class="checkbox mb-3"> 
                         <label> <input type="checkbox" value="remember-me"> Recordar mis datos</label>
                     </div> 
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Inicia Sesión</button> 
-                    <hr class="my-4"> <small class="text-body-secondary">Texto de Prueba</small> 
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesión</button> 
                 </form> 
             </div> 
         </div> 

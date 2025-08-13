@@ -26,13 +26,26 @@ session_start();
           </li>
           <?php if (isset($_SESSION["usuario_id"])): ?>
           <li class="nav-item">
-            <a class="nav-link px-4" href="../php/perfil.php">Perfil</a>
+            <a class="nav-link px-4" href="php/perfil.php">Perfil</a>
           </li>
           <?php endif; ?>
         </ul>
       </div>
     </div>
   </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <div class="container d-flex flex-column align-items-center text-center">
 

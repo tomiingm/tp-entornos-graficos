@@ -30,6 +30,7 @@ while ($fila = mysqli_fetch_assoc($resultadoPuntajes)) {
   <meta charset="UTF-8">
   <title>Asignar Puntaje</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="/nuestro-proyecto-web/assets/images/utn.ico" type="image/x-icon">
 </head>
 <body class="container mt-5">
 

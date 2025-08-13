@@ -58,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['cv'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="icon" href="/nuestro-proyecto-web/assets/images/utn.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/perfil.css">
     <link rel="stylesheet" href="../css/estilos.css">
     <title>Perfil</title>
@@ -75,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['cv'])) {
           <a class="nav-link px-4" href="../php/vacantes.php">Vacantes</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  rounded-pill active px-4 bg-secondary text-white" href="php/#">Perfil</a>
+            <a class="nav-link  rounded-pill active px-4 bg-secondary text-white" href="../php/perfil.php">Perfil</a>
         </li>
       </ul>
     </div>
