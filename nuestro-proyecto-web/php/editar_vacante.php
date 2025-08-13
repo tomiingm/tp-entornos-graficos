@@ -7,6 +7,15 @@ if (!isset($_GET['id'])) {
   exit;
 }
 
+if (!isset($_SESSION["usuario_id"])) {
+    header("Location: login.php");
+    exit();
+    if ($_SESSION["rol"] != 2 ) {
+        header("Location: vacantes.php");
+        exit();
+    }
+}
+
 $id = (int) $_GET['id'];
 $hoy = date('Y-m-d');
 

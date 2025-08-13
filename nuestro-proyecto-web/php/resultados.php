@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 $idVacante = intval($_GET['id']);
 require('conection.php');
 
@@ -62,14 +63,15 @@ $resultado = mysqli_query($conn, $sql);
         <p class='documento'><strong>DNI:</strong> <?= htmlspecialchars($unaPersona["DNI"]) ?></p>
 
         <?php
-          if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2)):
+  if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2)):
         ?>
-          <div class='mt-2'>
+        <div class='mt-2'>
             <a href='<?= htmlspecialchars($unaPersona['cv']) ?>' class='btn btn-outline-primary' download>Descargar CV</a>
-          </div>
-          <div class='mt-2'>
+        </div>
+        <div class='mt-2'>
             <a href='resultado_item.php?id_persona=<?= urlencode($unaPersona['ID']) ?>&id_vacante=<?= urlencode($idVacante) ?>' class='btn btn-outline-success'>Asignar puntaje</a>
-          </div>
+        </div>
+          
         <?php endif; ?>
 
         <?php
@@ -78,13 +80,16 @@ $resultado = mysqli_query($conn, $sql);
           $resPuntaje = mysqli_query($conn, $queryPuntaje);
           $puntaje = mysqli_fetch_assoc($resPuntaje)['total'];
         ?>
-        <div class='mt-2'>
+          <div class='mt-2 d-flex justify-content-between align-items-center'>
           <?php if ($puntaje !== null): ?>
-            <span class='badge bg-info text-dark'>Puntaje total: <?= $puntaje ?></span>
+          <span class='badge bg-info text-dark mb-0'>Puntaje total: <?= $puntaje ?></span>
+          <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2)){?>
+          <a href='notificar.php?id_persona=<?= urlencode($unaPersona['ID']) ?>&id_vacante=<?= urlencode($idVacante) ?>'class='btn btn-warning btn-notificar'> Notificar </a>
+          <?php } ?>
           <?php else: ?>
             <span class='badge bg-secondary'>Aún no se asignó puntaje</span>
           <?php endif; ?>
-        </div>
+          </div>
       </div>
     <?php } ?>
   </div>
