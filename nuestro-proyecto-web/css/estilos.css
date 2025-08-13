@@ -17,6 +17,13 @@ body::before {
 }
 
 
+.formulario-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 500px;
+}
 
 
 
@@ -58,5 +65,20 @@ body::before {
     }
 
 }
-  
 
+
+.nav-item:hover {
+    background-color: #6d747d; 
+    border-radius: 50rem;
+    transition : background-color 0.1s ease-in-out;
+}
+
+.nav-item {
+    border-radius: 50rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out; 
+}
+
+.nav-item:hover a {
+    color: white;
+}
