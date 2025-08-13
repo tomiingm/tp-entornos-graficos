@@ -4,6 +4,10 @@ session_start();
 if (!isset($_SESSION["usuario_id"])) {
     header("Location: login.php");
     exit();
+    if ($_SESSION["rol"] != 2 ) {
+        header("Location: vacantes.php");
+        exit();
+    }
 }
 
 require("conection.php");
@@ -20,10 +24,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecha_ini = $_POST["fecha_ini"];
     $fecha_fin = $_POST["fecha_fin"];
     $jefe_catedra_id = intval($_POST["jefe_catedra"]);
-    if ($fecha_ini > date('Y-m-d')){
-      $estado = "sin abrir";
+
+    // Validación en servidor
+    if ($fecha_ini < date('Y-m-d')) {
+        die("La fecha de inicio no puede ser anterior a hoy.");
+    }
+    if ($fecha_fin < $fecha_ini) {
+        die("La fecha de fin no puede ser anterior a la fecha de inicio.");
+    }
+
+    if ($fecha_ini > date('Y-m-d')) {
+        $estado = "sin abrir";
     } else {
-      $estado = "abierta";
+        $estado = "abierta";
     }
 
     $sqlInsert = "INSERT INTO vacante (titulo, descripcion, fecha_ini, fecha_fin, ID_Jefe, estado)
@@ -44,9 +57,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8">
   <title>Crear Vacante</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/estilosvacantes.css" rel="stylesheet">
   <link rel="icon" href="/nuestro-proyecto-web/assets/images/utn.ico" type="image/x-icon">
 </head>
-<body class="container py-4">
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <div class="collapse navbar-collapse justify-content-center">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link px-4" href="../index.php">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link rounded-pill active px-4 bg-secondary text-white" href="../php/vacantes.php">Vacantes</a>
+        </li>
+        <?php if (isset($_SESSION["usuario_id"])): ?>
+          <li class="nav-item">
+            <a class="nav-link px-4" href="../php/perfil.php">Perfil</a>
+          </li>
+        <?php endif; ?>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<div class="caja_nueva_vacante shadow-lg">
 
   <h2>Crear Nueva Vacante</h2>
   <form method="POST" action="crear_vacante.php" class="mt-4">
@@ -63,7 +99,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="mb-3">
       <label for="fecha_ini" class="form-label">Fecha de Inicio</label>
-      <input type="date" class="form-control" id="fecha_ini" name="fecha_ini" required>
+      <input type="date" class="form-control" id="fecha_ini" name="fecha_ini" 
+             min="<?= date('Y-m-d') ?>" required>
     </div>
 
     <div class="mb-3">
@@ -87,5 +124,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a href="vacantes.php" class="btn btn-secondary">Cancelar</a>
   </form>
 
+  <script>
+    // Validación en cliente: fecha fin >= fecha inicio
+    document.getElementById('fecha_ini').addEventListener('change', function() {
+      document.getElementById('fecha_fin').min = this.value;
+    });
+  </script>
+
+</div>
+</div>
 </body>
 </html>

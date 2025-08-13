@@ -66,6 +66,11 @@ if ($rol !== null) {
         header("Location: vacantes.php");
         exit();
     }
+
+    if ($rol === 0 && $vacante['estado'] === "sin abrir") {
+        header("Location: vacantes.php");
+        exit();
+    }
 }
 
 // Procesar postulación (solo postulantes logueados - rol 0)
