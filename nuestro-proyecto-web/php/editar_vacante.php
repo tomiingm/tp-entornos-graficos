@@ -16,6 +16,10 @@ if (!isset($_SESSION["usuario_id"])) {
     }
 }
 
+$sqlJefes = "SELECT id, nombre, apellido FROM persona WHERE rol = 2";
+$resJefes = mysqli_query($conn, $sqlJefes);
+$jefesdecatedra = mysqli_fetch_all($resJefes, MYSQLI_ASSOC);
+
 $id = (int) $_GET['id'];
 $hoy = date('Y-m-d');
 
@@ -24,9 +28,9 @@ $errores = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $titulo = trim($_POST['titulo']);
   $descripcion = trim($_POST['descripcion']);
-  $estado = $_POST['estado'];
   $fecha_ini = $_POST['fecha_ini'];
   $fecha_fin = $_POST['fecha_fin'];
+  $jefe_catedra = $_POST['jefe_catedra'];
 
   // === Validaciones de fecha (SERVIDOR) ===
   // Igual que en "crear": bloquear inicio en pasado
@@ -114,16 +118,6 @@ if (!$vacante) {
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Estado</label>
-        <select name="estado" class="form-select" required>
-          <option value="abierta"     <?= $vacante['estado'] === 'abierta' ? 'selected' : '' ?>>Abierta</option>
-          <option value="cerrada"     <?= $vacante['estado'] === 'cerrada' ? 'selected' : '' ?>>Cerrada</option>
-          <option value="en revision" <?= $vacante['estado'] === 'en revision' ? 'selected' : '' ?>>En revisión</option>
-          <option value="sin abrir"   <?= $vacante['estado'] === 'sin abrir' ? 'selected' : '' ?>>Sin abrir</option>
-        </select>
-      </div>
-
-      <div class="mb-3">
         <label class="form-label">Fecha de inicio</label>
         <input
           type="date"
@@ -136,7 +130,7 @@ if (!$vacante) {
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Fecha de finalización</label>
+        <label class="form-label">Fecha de fin</label>
         <input
           type="date"
           name="fecha_fin"
@@ -146,6 +140,18 @@ if (!$vacante) {
           min="<?= htmlspecialchars($vacante['fecha_ini']) ?>"
           required>
       </div>
+
+    <div class="mb-3">
+      <label for="jefe_catedra" class="form-label">Jefe de Cátedra</label>
+      <select class="form-select" id="jefe_catedra" name="jefe_catedra" required>
+        <option value="" disabled selected>Seleccione un jefe de cátedra</option>
+        <?php foreach ($jefesdecatedra as $jefe): ?>
+          <option value="<?= $jefe['id'] ?>">
+            <?= htmlspecialchars($jefe['nombre'] . ' ' . $jefe['apellido']) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
 
       <button type="submit" class="btn btn-primary">Guardar cambios</button>
       <a href="vacantes.php" class="btn btn-secondary">Cancelar</a>
