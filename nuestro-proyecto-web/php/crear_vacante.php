@@ -125,7 +125,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </form>
 
   <script>
-    // Validación en cliente: fecha fin >= fecha inicio
     document.getElementById('fecha_ini').addEventListener('change', function() {
       document.getElementById('fecha_fin').min = this.value;
     });

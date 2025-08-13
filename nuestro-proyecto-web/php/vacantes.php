@@ -30,21 +30,41 @@ $stmtActualizar2 = mysqli_prepare($conn, $sqlActualizar2);
 mysqli_stmt_bind_param($stmtActualizar2, "s", $hoy);
 mysqli_stmt_execute($stmtActualizar2);
 
-if (isset($_SESSION["usuario_id"]) and isset($_SESSION["rol"]) and $_SESSION["rol"]==2 ) {
+if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
+    $idUsuario = $_SESSION['usuario_id'];
+    $rolUsuario = $_SESSION['rol'];
 
-$idUsuario = $_SESSION['usuario_id'];
-$rolUsuario = $_SESSION['rol'];
-$sql = "SELECT v.* 
-        FROM vacante v
-        WHERE v.ID_Jefe = $idUsuario
-        ORDER BY v.fecha_fin DESC";
+    if ($rolUsuario == 1) {
+        // Admin: ve todas las vacantes
+        $sql = "SELECT * 
+                FROM vacante 
+                ORDER BY fecha_fin DESC";
         $resultado = mysqli_query($conn, $sql);
+
+    } elseif ($rolUsuario == 2) {
+        // Jefe: ve solo las suyas
+        $sql = "SELECT v.* 
+                FROM vacante v
+                WHERE v.ID_Jefe = $idUsuario
+                ORDER BY v.fecha_fin DESC";
+        $resultado = mysqli_query($conn, $sql);
+
+    } else {
+        // Otros usuarios logueados
+        $sql = "SELECT * 
+                FROM vacante 
+                WHERE fecha_fin > CURDATE() OR estado = 'abierta' 
+                ORDER BY fecha_fin DESC";
+        $resultado = mysqli_query($conn, $sql);
+    }
+
 } else {
+    // Visitantes no logueados
     $sql = "SELECT * 
-         FROM vacante 
-         WHERE fecha_fin > CURDATE() OR estado = 'abierta' 
-         ORDER BY fecha_fin DESC";
-         $resultado = mysqli_query($conn, $sql);
+            FROM vacante 
+            WHERE fecha_fin > CURDATE() OR estado = 'abierta' 
+            ORDER BY fecha_fin DESC";
+    $resultado = mysqli_query($conn, $sql);
 }
 
 ?>
