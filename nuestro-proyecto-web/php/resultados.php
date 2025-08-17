@@ -55,23 +55,25 @@ $resultado = mysqli_query($conn, $sql);
     </div>
   </div>
 
-  <div class="scroll-vacantes">
+<div class="scroll-vacantes">
+  <?php if (mysqli_num_rows($resultado) === 0): ?>
+    <div class="alert alert-info text-center">
+      No hay personas postuladas a esta vacante.
+    </div>
+  <?php else: ?>
     <?php while($unaPersona = mysqli_fetch_assoc($resultado)) { ?>
       <div class='persona vacante p-3 mb-4 border rounded'>
         <p><strong>Nombre:</strong> <?= htmlspecialchars($unaPersona["nombre"]) ." ". htmlspecialchars($unaPersona["apellido"]) ?></p>
         <p class='correo'><strong>Correo:</strong> <?= htmlspecialchars($unaPersona["mail"]) ?></p>
         <p class='documento'><strong>DNI:</strong> <?= htmlspecialchars($unaPersona["DNI"]) ?></p>
 
-        <?php
-  if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2)):
-        ?>
-        <div class='mt-2'>
-            <a href='<?= htmlspecialchars($unaPersona['cv']) ?>' class='btn btn-outline-primary' download>Descargar CV</a>
-        </div>
-        <div class='mt-2'>
-            <a href='resultado_item.php?id_persona=<?= urlencode($unaPersona['ID']) ?>&id_vacante=<?= urlencode($idVacante) ?>' class='btn btn-outline-success'>Asignar puntaje</a>
-        </div>
-          
+        <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2)): ?>
+          <div class='mt-2'>
+              <a href='<?= htmlspecialchars($unaPersona['cv']) ?>' class='btn btn-outline-primary' download>Descargar CV</a>
+          </div>
+          <div class='mt-2'>
+              <a href='resultado_item.php?id_persona=<?= urlencode($unaPersona['ID']) ?>&id_vacante=<?= urlencode($idVacante) ?>' class='btn btn-outline-success'>Asignar puntaje</a>
+          </div>
         <?php endif; ?>
 
         <?php
@@ -80,19 +82,21 @@ $resultado = mysqli_query($conn, $sql);
           $resPuntaje = mysqli_query($conn, $queryPuntaje);
           $puntaje = mysqli_fetch_assoc($resPuntaje)['total'];
         ?>
-          <div class='mt-2 d-flex justify-content-between align-items-center'>
+        <div class='mt-2 d-flex justify-content-between align-items-center'>
           <?php if ($puntaje !== null): ?>
-          <span class='badge bg-info text-dark mb-0'>Puntaje total: <?= $puntaje ?></span>
-          <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2)){?>
-          <a href='notificar.php?id_persona=<?= urlencode($unaPersona['ID']) ?>&id_vacante=<?= urlencode($idVacante) ?>'class='btn btn-warning btn-notificar'> Notificar </a>
-          <?php } ?>
+            <span class='badge bg-info text-dark mb-0'>Puntaje total: <?= $puntaje ?></span>
+            <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] == 1 || $_SESSION['rol'] == 2)): ?>
+              <a href='notificar.php?id_persona=<?= urlencode($unaPersona['ID']) ?>&id_vacante=<?= urlencode($idVacante) ?>' class='btn btn-warning btn-notificar'>Notificar</a>
+            <?php endif; ?>
           <?php else: ?>
             <span class='badge bg-secondary'>Aún no se asignó puntaje</span>
           <?php endif; ?>
-          </div>
+        </div>
       </div>
     <?php } ?>
-  </div>
+  <?php endif; ?>
+</div>
+
 </div>
 
 <script>
