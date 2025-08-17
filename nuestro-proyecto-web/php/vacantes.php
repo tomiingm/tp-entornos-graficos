@@ -53,7 +53,7 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
         // Otros usuarios logueados
         $sql = "SELECT * 
                 FROM vacante 
-                WHERE fecha_fin > CURDATE() OR estado = 'abierta' 
+                WHERE fecha_fin > CURDATE() OR estado IN ('abierta','cerrada')
                 ORDER BY fecha_fin DESC";
         $resultado = mysqli_query($conn, $sql);
     }
@@ -62,7 +62,7 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
     // Visitantes no logueados
     $sql = "SELECT * 
             FROM vacante 
-            WHERE fecha_fin > CURDATE() OR estado = 'abierta' 
+            WHERE fecha_fin > CURDATE() OR estado IN ('abierta','cerrada') 
             ORDER BY fecha_fin DESC";
     $resultado = mysqli_query($conn, $sql);
 }
@@ -166,10 +166,14 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
     const vacantes = document.querySelectorAll('.vacante');
 
     vacantes.forEach(function(vacante) {
+      const titulo = vacante.querySelector('h5').textContent;   // ✅ ahora también busca en el título
       const descripcion = vacante.querySelector('.descripcion-recortada').textContent;
       const estado = vacante.querySelector('.estado').textContent.toLowerCase();
 
-      const coincideTexto = normalizar(descripcion).includes(filtroTexto);
+      const coincideTexto = 
+        normalizar(titulo).includes(filtroTexto) || 
+        normalizar(descripcion).includes(filtroTexto);
+
       const coincideEstado = !filtroEstado || estado.includes(filtroEstado);
 
       vacante.style.display = (coincideTexto && coincideEstado) ? 'block' : 'none';
@@ -179,6 +183,7 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
   document.getElementById('busqueda').addEventListener('input', filtrarVacantes);
   document.getElementById('filtro-estado')?.addEventListener('change', filtrarVacantes);
 </script>
+
 
 </body>
 </html>

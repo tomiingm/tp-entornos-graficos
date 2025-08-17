@@ -56,11 +56,6 @@ if ($usuario_id !== null) {
 
 // Restricciones de acceso que se aplican solo si hay sesión y rol:
 if ($rol !== null) {
-    // Si es postulante y la vacante está cerrada, redirigir (mantenemos lógica original)
-    if ($vacante['estado'] === "cerrada" && $rol === 0) {
-        header("Location: vacantes.php");
-        exit();
-    }
     // Si es jefe (rol 2) y no es el jefe de esta vacante, redirigir
     if ($rol === 2 && $vacante['ID_Jefe'] != $usuario_id) {
         header("Location: vacantes.php");
@@ -173,11 +168,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"]))
           <div class="alert alert-info">Ya estás postulado a esta vacante.</div>
         <?php elseif (!$tiene_cv): ?>
           <div class="alert alert-warning">No tienes cargado un Curriculum.</div>
-        <?php else: ?>
+        <?php elseif ($vacante['estado'] === 'abierta'): ?>
           <!-- Botón que abre el modal -->
           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPostulacion">
             Postulate
           </button>
+        <?php else: ?>
+          <div class="alert alert-secondary">La vacante no está disponible para postularse.</div>
         <?php endif; ?>
 
       <?php elseif ($rol === 1 || $rol === 2): // admin / jefe ?>
