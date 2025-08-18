@@ -66,7 +66,7 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical; /* alguno de estos agrega "..." al final de la descripcion si es muy larga*/
+  -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   max-height: 4.5em; 
   font-size: 16px;
@@ -99,6 +99,7 @@
   border-radius: 10px;
   box-sizing: border-box;
 }
+
 
 
 

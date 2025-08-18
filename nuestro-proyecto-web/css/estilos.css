@@ -57,7 +57,7 @@ body::before {
 
 #image-utn2 {
     width: 500px;
-    height: 150px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -65,14 +65,12 @@ body::before {
 @media (max-width: 576px) {
     #image-utn {
         width: 350px;
-        height: 120px;
 
         margin-bottom: 20px;
     }
 
     #image-utn2 {
         width: 350px;
-        height: 120px;
 
         margin-bottom: 20px;
 }

@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"]))
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="icon" href="/nuestro-proyecto-web/assets/images/utn.ico" type="image/x-icon">
 </head>
-<body>
+<body class="fondo-pared">
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
@@ -141,18 +141,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"]))
   <?php endif; ?>
 </div>
 
-<div class="contenedor">
-  <div class="cabecera">
-    <h2><?= htmlspecialchars($vacante['titulo']) ?></h2>
-    <a href="../index.php" >
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="imagen">
+<a href="../index.php" >
+    <img src="../assets/images/UTN-Logo-M2.png" alt="Logo Universidad" class="imagen">
     </a>
-  </div>
-</div>
+
+<div class="caja-vacante">
+  <a href="vacantes.php" class="btn btn-outline-secondary btn-volver">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+    <h2 class="text-center mb-3"><?= htmlspecialchars($vacante['titulo']) ?></h2>
 <hr>
 
-<div class="contenedor">
-  <div class="columna">
     <p><?= nl2br(htmlspecialchars($vacante['descripcion'])) ?></p>
     <p><strong>Inicio:</strong> <?= htmlspecialchars($vacante['fecha_ini']) ?></p>
     <p><strong>Fin:</strong> <?= htmlspecialchars($vacante['fecha_fin']) ?></p>
@@ -161,10 +160,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"]))
           La vacante se encuentra actualmente en revisión. Si desea extender la fecha de cierre debe editar la vacante.
         </div>
     <?php endif; ?>
-  </div>
 
-  <div class="columna-botones">
-    <div class="contenedor-botones">
+  <div class="botonera">
       <?php if ($rol === 0): // postulante logueado ?>
         <?php if ($ya_postulado): ?>
           <div class="alert alert-info">Ya estás postulado a esta vacante.</div>
@@ -193,7 +190,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"]))
       <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
     </div>
   </div>
-</div>
 
 <?php if ($rol === 0): ?>
 <!-- Modal Postulación (solo postulante logueado) -->

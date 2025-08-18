@@ -35,19 +35,6 @@ session_start();
     </div>
   </nav>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   <div class="container d-flex flex-column align-items-center text-center bg-white border rounded-4 shadow my-5 p-4">
     
     <a href="index.php">

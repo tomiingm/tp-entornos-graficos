@@ -1,5 +1,9 @@
 .imagen{
-  max-width: 800px;
+  display: block;
+  margin: 20px auto 40px auto;
+  width: 500px; 
+  height: auto;
+  
 }
 
 .contenedor {
@@ -11,23 +15,6 @@
   background-color: white;
 }
 
-.columna {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-}
-
-.contenedor-botones {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.contenedor-botones a {
-  width: 160px;
-  text-align: center;
-}
 
 .cabecera{
   display: flex;
@@ -36,6 +23,32 @@
   width: 60%;
 }
 
+body.fondo-pared {
+      background: url('https://www.alumnos.frro.utn.edu.ar/fondo.gif') repeat;
+      background-size: 80px 80px;
+    }
+.caja-vacante {
+      background: #fff;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 800px;
+      margin: 40px auto;
+      position: relative;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+.btn-volver {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+}
+.botonera {
+      border-top: 1px solid #ddd;
+      margin-top: 20px;
+      padding-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+}
 
 
 /* body::before {
