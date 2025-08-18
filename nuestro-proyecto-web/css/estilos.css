@@ -31,9 +31,10 @@ body::before {
     margin-top: 80px;
 }
 
-/* .logo-facu{
-    max-width: 800px;
-} */
+.link-logo-facu{
+   width: 600px;
+    height: 200px;
+} 
 
 
 .sin-flechas::-webkit-outer-spin-button,

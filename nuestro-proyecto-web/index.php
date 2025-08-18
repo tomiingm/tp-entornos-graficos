@@ -49,8 +49,10 @@ session_start();
 
 
   <div class="container d-flex flex-column align-items-center text-center bg-white border rounded-4 shadow my-5 p-4">
-
+    
+    <a href="index.php">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="logo-facu" >
+    </a>
 
     <h1 class="fw-bold mb-3">Portal de Vacantes</h1>
 

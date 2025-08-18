@@ -144,7 +144,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"]))
 <div class="contenedor">
   <div class="cabecera">
     <h2><?= htmlspecialchars($vacante['titulo']) ?></h2>
+    <a href="../index.php" >
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="imagen">
+    </a>
   </div>
 </div>
 <hr>

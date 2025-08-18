@@ -91,7 +91,9 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
 
 <div class="container">
 
+  <a href="../index.php">
   <img id="image-utn2" src="../assets/images/UTN-Logo-M2.png" alt="Logo Universidad" >
+  </a>
 
 <div class="linea mb-3">
   <div class="titulo">

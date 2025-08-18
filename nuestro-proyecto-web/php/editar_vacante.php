@@ -23,39 +23,7 @@ $jefesdecatedra = mysqli_fetch_all($resJefes, MYSQLI_ASSOC);
 $id = (int) $_GET['id'];
 $hoy = date('Y-m-d');
 
-$errores = [];
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $titulo = trim($_POST['titulo']);
-  $descripcion = trim($_POST['descripcion']);
-  $fecha_ini = $_POST['fecha_ini'];
-  $fecha_fin = $_POST['fecha_fin'];
-  $jefe_catedra = $_POST['jefe_catedra'];
-
-  // === Validaciones de fecha (SERVIDOR) ===
-  // Igual que en "crear": bloquear inicio en pasado
-  if ($fecha_ini < $hoy) {
-    $errores[] = "La fecha de inicio no puede ser anterior a hoy.";
-  }
-  if ($fecha_fin < $fecha_ini) {
-    $errores[] = "La fecha de fin no puede ser anterior a la fecha de inicio.";
-  }
-
-  if (empty($errores)) {
-    $sql = "UPDATE vacante SET titulo=?, descripcion=?, estado=?, fecha_ini=?, fecha_fin=? WHERE ID=?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "sssssi", $titulo, $descripcion, $estado, $fecha_ini, $fecha_fin, $id);
-    mysqli_stmt_execute($stmt);
-
-    if (mysqli_stmt_affected_rows($stmt) >= 0) {
-      header("Location: vacantes.php");
-      exit;
-    } else {
-      $errores[] = "Error al actualizar: " . mysqli_error($conn);
-    }
-  }
-}
-
+// Traer la vacante
 $sql = "SELECT * FROM vacante WHERE ID = ?";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "i", $id);
@@ -66,6 +34,52 @@ $vacante = mysqli_fetch_assoc($resultado);
 if (!$vacante) {
   echo "Vacante no encontrada.";
   exit;
+}
+
+// Determinar si puede editar la fecha de inicio
+$puedeEditarInicio = ($vacante['fecha_ini'] > $hoy);
+
+$errores = [];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $titulo = trim($_POST['titulo']);
+  $descripcion = trim($_POST['descripcion']);
+  $fecha_fin = $_POST['fecha_fin'];
+  $jefe_catedra = $_POST['jefe_catedra'];
+
+  // Si puede editar fecha inicio, la tomamos del form, sino mantenemos la original
+  $fecha_ini = $puedeEditarInicio ? $_POST['fecha_ini'] : $vacante['fecha_ini'];
+
+  // === Validaciones de fecha (SERVIDOR) ===
+  if ($puedeEditarInicio && $fecha_ini < $hoy) {
+    $errores[] = "La fecha de inicio no puede ser anterior a hoy.";
+  }
+  if ($fecha_fin < $fecha_ini) {
+    $errores[] = "La fecha de fin no puede ser anterior a la fecha de inicio.";
+  }
+
+  // Determinar estado según fechas
+  if (empty($errores)) {
+    if ($fecha_ini > $hoy) {
+      $estado = "sin abrir";
+    } elseif ($fecha_ini <= $hoy && $fecha_fin >= $hoy) {
+      $estado = "abierta";
+    } else {
+      $estado = "finalizada";
+    }
+
+    $sql = "UPDATE vacante SET titulo=?, descripcion=?, fecha_ini=?, fecha_fin=?, ID_Jefe=?, estado=? WHERE ID=?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ssssisi", $titulo, $descripcion, $fecha_ini, $fecha_fin, $jefe_catedra, $estado, $id);
+    mysqli_stmt_execute($stmt);
+
+    if (mysqli_stmt_affected_rows($stmt) >= 0) {
+      header("Location: vacantes.php");
+      exit;
+    } else {
+      $errores[] = "Error al actualizar: " . mysqli_error($conn);
+    }
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -126,7 +140,10 @@ if (!$vacante) {
           class="form-control"
           value="<?= htmlspecialchars($vacante['fecha_ini']) ?>"
           min="<?= $hoy ?>"
-          required>
+          <?= $puedeEditarInicio ? '' : 'readonly' ?>>
+        <?php if (!$puedeEditarInicio): ?>
+          <small class="text-muted">La fecha de inicio no puede modificarse porque la vacante ya ha comenzado.</small>
+        <?php endif; ?>
       </div>
 
       <div class="mb-3">
@@ -141,17 +158,17 @@ if (!$vacante) {
           required>
       </div>
 
-    <div class="mb-3">
-      <label for="jefe_catedra" class="form-label">Jefe de Cátedra</label>
-      <select class="form-select" id="jefe_catedra" name="jefe_catedra" required>
-        <option value="" disabled selected>Seleccione un jefe de cátedra</option>
-        <?php foreach ($jefesdecatedra as $jefe): ?>
-          <option value="<?= $jefe['id'] ?>">
-            <?= htmlspecialchars($jefe['nombre'] . ' ' . $jefe['apellido']) ?>
-          </option>
-        <?php endforeach; ?>
-      </select>
-    </div>
+      <div class="mb-3">
+        <label for="jefe_catedra" class="form-label">Jefe de Cátedra</label>
+        <select class="form-select" id="jefe_catedra" name="jefe_catedra" required>
+          <option value="" disabled>Seleccione un jefe de cátedra</option>
+          <?php foreach ($jefesdecatedra as $jefe): ?>
+            <option value="<?= $jefe['id'] ?>" <?= $jefe['id'] == $vacante['ID_Jefe'] ? 'selected' : '' ?>>
+              <?= htmlspecialchars($jefe['nombre'] . ' ' . $jefe['apellido']) ?>
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
       <button type="submit" class="btn btn-primary">Guardar cambios</button>
       <a href="vacantes.php" class="btn btn-secondary">Cancelar</a>
@@ -170,8 +187,6 @@ if (!$vacante) {
       fin.value = fin.min;
     }
   }
-
-  ini.min = hoy;
 
   ini.addEventListener('change', syncMinFin);
   document.addEventListener('DOMContentLoaded', syncMinFin);

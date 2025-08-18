@@ -44,7 +44,9 @@ $resultado = mysqli_query($conn, $sql);
 </nav>
 
 <div class="container">
+  <a href="../index.php">
   <img class="imagen" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="logo-facu">
+        </a>
 
   <div class="linea">
     <div class="titulo">

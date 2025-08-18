@@ -69,9 +69,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container col-xl-10 col-xxl-8 px-4"> 
     <div class="row align-items-center g-lg-5"> 
         
+    <a href="../index.php" class="link-logo-facu" >
         <div class="col-lg-7 text-center text-lg-start"> 
-            <img src="/nuestro-proyecto-web/assets/images/UTN-Logo-M.png" alt="Logo Universidad" class="logo-facu" id="image-utn" >
+            <img src="/nuestro-proyecto-web/assets/images/UTN-Logo-M.png" alt="Logo Universidad" class="imagen-logo-facu" id="image-utn" >
         </div> 
+    </a>
 
         <div class="col-md-10 mx-auto col-lg-5">
             
