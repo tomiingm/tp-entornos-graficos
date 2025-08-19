@@ -20,8 +20,6 @@ $idVacante = intval($_GET['id']);
 $sqlItemsVacantes = "SELECT * FROM vacante WHERE ID = $idVacante";
 $resultado2 = mysqli_query($conn, $sqlItemsVacantes);
 
-
-
 // Insertar nuevo ítem si se envió el formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['descripcion'], $_POST['puntaje_max'])) {
     $desc = mysqli_real_escape_string($conn, $_POST['descripcion']);
@@ -36,8 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['descripcion'], $_POST[
 $sqlItems = "SELECT * FROM item WHERE ID_Vacante = $idVacante";
 $resultado = mysqli_query($conn, $sqlItems);
 
-//eliminacion de items
-
+// Eliminación de items
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_item_id'])) {
     $idItem = intval($_POST['eliminar_item_id']);
     $sqlDelete = "DELETE FROM item WHERE nro_item = $idItem AND ID_Vacante = $idVacante";
@@ -54,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_item_id'])) {
   <title>Orden de Mérito</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="../css/estilos.css" rel="stylesheet">
 </head>
 <body>
 
@@ -75,20 +73,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_item_id'])) {
   </div>
 </nav>
 
-<div class="container py-4">
+<div class="caja">
 
   <?php
   if ($resultado2 && mysqli_num_rows($resultado2) > 0) {
     $vacante = mysqli_fetch_assoc($resultado2);
-    echo "<h2>Orden de Mérito - Vacante #". $idVacante ." : " .$vacante['titulo']."</h2>" ;
+    echo '
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="m-0">Orden de Mérito - Vacante #'. $idVacante .' : '. htmlspecialchars($vacante['titulo']) .'</h2>
+        <a href="unavacante.php?id='. $idVacante .'" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left"></i>
+        </a>
+      </div>
+      <hr>
+    ';
   } else {
     echo "<p>No se encontró la vacante.</p>";
   }
-  echo "<hr>";
   ?>
 
-  <table class="table table-bordered">
-    <thead>
+  <table class="table table-bordered text-center">
+    <thead class="table-light">
       <tr>
         <th>Descripción</th>
         <th>Puntaje Máximo</th>
@@ -126,8 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_item_id'])) {
     </div>
   </form>
 
-<br>
-<a href="unavacante.php?id=<?= $idVacante ?>" class="btn btn-secondary">Volver</a>
 </div>
+
 </body>
 </html>

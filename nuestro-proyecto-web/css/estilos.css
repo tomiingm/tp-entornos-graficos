@@ -93,3 +93,19 @@ body::before {
 .nav-item:hover a {
     color: white;
 }
+
+ .caja {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 900px;
+      margin: 40px auto;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      background: #fff;
+    }
