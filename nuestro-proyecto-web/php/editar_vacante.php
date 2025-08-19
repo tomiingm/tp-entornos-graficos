@@ -171,7 +171,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
 
       <button type="submit" class="btn btn-primary">Guardar cambios</button>
-      <a href="vacantes.php" class="btn btn-secondary">Cancelar</a>
+      <a href="unavacante.php?id=<?= $id ?>" class="btn btn-secondary">Cancelar</a>
     </form>
   </div>
 </div>
