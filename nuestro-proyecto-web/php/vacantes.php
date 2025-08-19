@@ -102,15 +102,34 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
   <div class="d-flex align-items-center gap-2">
   <input type="text" class="form-control" name="busqueda" id="busqueda" placeholder="Buscar">
   
-  <?php if (isset($_SESSION["rol"]) && ( $_SESSION["rol"] == 1 or  $_SESSION["rol"] == 2)): ?>
+<?php if (isset($_SESSION["rol"])): ?>
+  <?php if ($_SESSION["rol"] == 1 || $_SESSION["rol"] == 2): ?>
+    <!-- Admin y Jefe: todas las opciones -->
+    <select id="filtro-estado" class="form-select w-auto">
+      <option value="">Todas</option>
+      <option value="abierta">Abiertas</option>
+      <option value="cerrada">Cerradas</option>
+      <option value="en revision">En revisión</option>
+      <option value="sin abrir">Sin abrir</option>
+    </select>
+  <?php else: ?>
+    <!-- Postulante u otro rol: solo abiertas y cerradas -->
+    <select id="filtro-estado" class="form-select w-auto">
+      <option value="">Todas</option>
+      <option value="abierta">Abiertas</option>
+      <option value="cerrada">Cerradas</option>
+    </select>
+  <?php endif; ?>
+<?php else: ?>
+  <!-- Visitante no logueado: solo abiertas y cerradas -->
   <select id="filtro-estado" class="form-select w-auto">
     <option value="">Todas</option>
     <option value="abierta">Abiertas</option>
     <option value="cerrada">Cerradas</option>
-    <option value="en revision">En revisión</option>
-    <option value="sin abrir">Sin abrir</option>
   </select>
-  <?php endif; ?>
+<?php endif; ?>
+
+
 <?php if (isset($_SESSION["rol"]) && $_SESSION["rol"] == 1): ?>
   <a href="crear_vacante.php" class="btn btn-success px-4 text-nowrap">Crear Vacante</a>
 <?php endif; ?>

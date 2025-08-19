@@ -18,6 +18,7 @@ $resultado = mysqli_query($conn, $sql);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resultados</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="../css/estilosvacantes.css" rel="stylesheet">
   <link rel="icon" href="/nuestro-proyecto-web/assets/images/utn.ico" type="image/x-icon">
 </head>
@@ -48,14 +49,17 @@ $resultado = mysqli_query($conn, $sql);
   <img class="imagen" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="logo-facu">
         </a>
 
-  <div class="linea">
-    <div class="titulo">
-      <p>Personas</p>
-    </div>
-    <div>
-      <input type="text" class="buscar" name="busqueda" id="busqueda" placeholder="Buscar">
-    </div>
+<div class="linea d-flex justify-content-between align-items-center">
+  <div class="titulo mb-0">
+    <p class="mb-0">Personas</p>
   </div>
+  <div class="d-flex align-items-center gap-3">
+    <input type="text" class="buscar" name="busqueda" id="busqueda" placeholder="Buscar">
+    <a href="unavacante.php?id=<?= urlencode($idVacante) ?>" class="btn btn-outline-secondary btn-volver">
+      <i class="bi bi-arrow-left"></i>
+    </a>
+  </div>
+</div>
 
 <div class="scroll-vacantes">
   <?php if (mysqli_num_rows($resultado) === 0): ?>

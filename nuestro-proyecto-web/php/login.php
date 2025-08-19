@@ -93,7 +93,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div> <div class="checkbox mb-3"> 
                         <label> <input type="checkbox" value="remember-me"> Recordar mis datos</label>
                     </div> 
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesión</button> 
+                    <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">Iniciar Sesión</button> 
+
+                    <div class="text-center">
+                        ¿No tienes cuenta? 
+                        <a href="registro.php" class="text-decoration-none">Regístrate aquí</a>
+                    </div>
+</form>
                 </form> 
             </div> 
         </div> 
