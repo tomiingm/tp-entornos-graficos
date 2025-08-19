@@ -19,23 +19,35 @@ if (!$conn) {
 $mensaje = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
-    $password = password_hash($_POST["clave"], PASSWORD_DEFAULT); //Encriptacion
-    $dni = $_POST["dni"];
-    $mail = $_POST["mail"];
-    $domicilio = $_POST["domicilio"];
-    $telefono = $_POST["telefono"];
+    $nombre = trim($_POST["nombre"]);
+    $apellido = trim($_POST["apellido"]);
+    $password = password_hash($_POST["clave"], PASSWORD_DEFAULT);
+    $dni = trim($_POST["dni"]);
+    $mail = trim($_POST["mail"]);
+    $domicilio = trim($_POST["domicilio"]);
+    $telefono = trim($_POST["telefono"]);
     $rol = $_POST["rol"];
 
-    $sql = "INSERT INTO persona (nombre, apellido, mail, clave, DNI, rol, domicilio, telefono) 
-            VALUES ('$nombre','$apellido','$mail','$password','$dni','$rol','$domicilio','$telefono')";
+    // Verificar si ya existe ese DNI
+    $check = mysqli_prepare($conn, "SELECT ID FROM persona WHERE DNI = ?");
+    mysqli_stmt_bind_param($check, "s", $dni);
+    mysqli_stmt_execute($check);
+    mysqli_stmt_store_result($check);
 
-
-    if (mysqli_query($conn, $sql)) {
-        $mensaje = "¡Registro exitoso!";
+    if (mysqli_stmt_num_rows($check) > 0) {
+        $mensaje = "⚠️ El DNI ya está registrado. Intenta con otro.";
     } else {
-        $mensaje = "Error: " . mysqli_error($conn);
+        // Insertar usuario nuevo
+        $sql = "INSERT INTO persona (nombre, apellido, mail, clave, DNI, rol, domicilio, telefono) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ssssisss", $nombre, $apellido, $mail, $password, $dni, $rol, $domicilio, $telefono);
+
+        if (mysqli_stmt_execute($stmt)) {
+            $mensaje = "✅ ¡Registro exitoso!";
+        } else {
+            $mensaje = "Error: " . mysqli_error($conn);
+        }
     }
 }
 
