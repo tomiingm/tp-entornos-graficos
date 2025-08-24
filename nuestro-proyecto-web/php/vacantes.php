@@ -53,7 +53,7 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
         // Otros usuarios logueados
         $sql = "SELECT * 
                 FROM vacante 
-                WHERE fecha_fin > CURDATE() OR estado IN ('abierta','cerrada')
+                WHERE estado IN ('abierta','cerrada')
                 ORDER BY fecha_fin DESC";
         $resultado = mysqli_query($conn, $sql);
     }
@@ -62,7 +62,7 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
     // Visitantes no logueados
     $sql = "SELECT * 
             FROM vacante 
-            WHERE fecha_fin > CURDATE() OR estado IN ('abierta','cerrada') 
+            WHERE estado IN ('abierta','cerrada') 
             ORDER BY fecha_fin DESC";
     $resultado = mysqli_query($conn, $sql);
 }
@@ -71,7 +71,10 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
-    <div class="collapse navbar-collapse justify-content-center">
+    <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarContenido">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link px-4" href="../index.php">Inicio</a>
@@ -89,7 +92,7 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
   </div>
 </nav>
 
-<div class="container">
+<div class="container containerbody">
 
   <a href="../index.php">
   <img id="image-utn2" src="../assets/images/UTN-Logo-M2.png" alt="Logo Universidad" >
@@ -205,6 +208,7 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
   document.getElementById('filtro-estado')?.addEventListener('change', filtrarVacantes);
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
