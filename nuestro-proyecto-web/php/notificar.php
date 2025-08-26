@@ -37,6 +37,8 @@ $correo_destino = $persona["mail"];
 <title>Notificar Postulante</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/estilosvacantes.css" rel="stylesheet">
+<link href="../css/estilos.css" rel="stylesheet">
+<link rel="icon" href="../assets/images/utn.ico" type="image/x-icon">
 </head>
 <body >
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -78,7 +80,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["asunto"], $_POST["mens
     }
 }
 ?>
-    <div class="caja_nueva_vacante">
+
+<div class="caja_nueva_vacante">
 
 <h2>Notificar Postulante</h2>
 <p><strong>Destinatario:</strong> <?= htmlspecialchars($correo_destino) ?></p>

@@ -20,6 +20,7 @@ $resultado = mysqli_query($conn, $sql);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="../css/estilosvacantes.css" rel="stylesheet">
+  <link href="../css/estilos.css" rel="stylesheet">
   <link rel="icon" href="/nuestro-proyecto-web/assets/images/utn.ico" type="image/x-icon">
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -47,9 +48,9 @@ $resultado = mysqli_query($conn, $sql);
   </div>
 </nav>
 
-<div class="container">
+<div class="container containerbody">
   <a href="../index.php">
-  <img class="imagen" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_FEqjavcxlrifqvl75bLKmY4my0fdwLqDmQ&s" alt="Logo Universidad" class="logo-facu">
+  <img id="image-utn2" class="imagen" src="../assets/images/UTN-Logo-M2.png" alt="Logo Universidad" class="logo-facu">
         </a>
 
 <div class="linea d-flex justify-content-between align-items-center">
