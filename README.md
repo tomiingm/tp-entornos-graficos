@@ -12,7 +12,7 @@ Su objetivo es el desarrollo de un sistema web que permite la **gestión de vaca
 
 ## 👨‍💻 Autores
 - Francisco Bruno → [GitHub](https://github.com/FranciscoBr16)  
-- Tomas Malcom Gigli → [GitHub](https://github.com/tomiingm)  
+- Tomas Malcolm Gigli → [GitHub](https://github.com/tomiingm)  
 - Jeronimo Natan Alvarez → [GitHub](https://github.com/roscoe01)  
 
 ---
