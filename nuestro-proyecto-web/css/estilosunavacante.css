@@ -51,4 +51,8 @@ body.fondo-pared {
       gap: 10px;
 }
 
-
+.nav-item {
+    border-radius: 50rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out; 
+}
