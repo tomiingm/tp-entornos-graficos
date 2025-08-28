@@ -134,23 +134,18 @@ echo "<div class='container mt-5 border border-light-subtle p-5 rounded-5 shadow
     echo "<br>";
 
 
-
-// idea: poner un boton de editar datos que te permita editar domicilio y telefono.
-
-
 echo "<form method='POST' enctype='multipart/form-data' class='mt-4'>
     <label for='cv' class='form-label'>Subir CV (PDF):</label>
     <div class='input-group'>
-        <input class='form-control' type='file' name='cv' id='cv' accept='pdf' required>
+        <input class='form-control' type='file' name='cv' id='cv' accept='application/pdf' required>
         <button type='submit' class='btn btn-success'>
             <i class='bi bi-upload'></i> Subir CV
         </button>
     </div>
 </form>";
 
-if (isset($mensaje))
-{
-    echo "<div class='alert alert-info'><?php echo $mensaje; ?></div>";
+if (isset($mensaje)) {
+    echo "<div class='alert alert-info'>$mensaje</div>";
 }
 
 echo "<div class='d-flex justify-content-between align-items-center'>";
@@ -177,12 +172,7 @@ echo "<div class='text-end mt-4 border-top pt-3'>
 </div>"
 
 
-
-
-
-
 ?>
-
 
 
 <script>
