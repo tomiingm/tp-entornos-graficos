@@ -79,10 +79,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="collapse navbar-collapse justify-content-center" id="navbarContenido">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active rounded-pill px-4 bg-secondary text-white" href="../index.php">Inicio</a>
+                        <a class="nav-link active rounded-pill px-4 bg-secondary text-white" href="../index.php" aria-label="Inicio">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-4" href="vacantes.php">Vacantes</a>
+                        <a class="nav-link px-4" href="vacantes.php" aria-label="Vacantes">Vacantes</a>
                     </li>
                 </ul>
             </div>
@@ -91,13 +91,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container contenedor">
         <div class="row justify-content-md-center">
             <div class="col text-end">
-                <a href="../index.php" class="btn btn-light rounded-circle shadow-sm ">
-                    <i class="bi bi-arrow-left"></i>
+                <a href="../index.php" class="btn btn-light rounded-circle shadow-sm " aria-label="Volver al inicio">
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
                 </a>
             </div>
             <div class="container col-8">
                 <div class="formulario-box shadow">
-                    <h2 class="text-center mb-4">Registrate</h2>
+                    <h1 class="text-center mb-4">Registrate</h1>
                     <?php if ($mensaje) {
                         echo "<div class='alert alert-info'>$mensaje</div>";
                     } ?>
@@ -120,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
                                 oninvalid="this.setCustomValidity('⚠️ El nombre solo puede contener letras y espacios, máximo 255 caracteres.')"
                                 oninput="this.setCustomValidity('')">
+                        </div>
                         <div class="mb-3">
                             <label for="apellido" class="form-label">Apellido:</label>
                             <input type="text" 
@@ -131,10 +132,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 oninput="this.setCustomValidity('')">
                         </div>
                         <div class="mb-3">
-                            <label for="mail" class="form-label">E-mail:</label>
+                            <label for="correo" class="form-label">Correo electrónico:</label>
                             <input type="email" 
                                 class="form-control" 
-                                name="mail" id="mail" 
+                                name="correo" id="correo" 
                                 required maxlength="255"
                                 oninvalid="this.setCustomValidity('⚠️ Ingresa un correo válido, máximo 255 caracteres.')"
                                 oninput="this.setCustomValidity('')">
