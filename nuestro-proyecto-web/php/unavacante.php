@@ -2,11 +2,9 @@
 session_start();
 require("conection.php");
 
-// SESSION seguros
 $usuario_id = isset($_SESSION['usuario_id']) ? (int) $_SESSION['usuario_id'] : null;
 $rol = isset($_SESSION['rol']) ? (int) $_SESSION['rol'] : null;
 
-// Obtener ID de vacante desde URL
 if (!isset($_GET['id'])) {
     echo "ID de vacante no proporcionado.";
     exit();
@@ -16,7 +14,6 @@ $idVacante = intval($_GET['id']);
 $error = null;
 $success = null;
 
-// Obtener datos de la vacante (prepared statement)
 $stmtVac = mysqli_prepare($conn, "SELECT * FROM vacante WHERE ID = ?");
 mysqli_stmt_bind_param($stmtVac, "i", $idVacante);
 mysqli_stmt_execute($stmtVac);
@@ -27,12 +24,10 @@ if (!$resVac || mysqli_num_rows($resVac) == 0) {
 }
 $vacante = mysqli_fetch_assoc($resVac);
 
-// Mostrar mensaje si vino por finalización
 if (isset($_GET['finalizada']) && $_GET['finalizada'] == 1) {
     $success = "La vacante se finalizó correctamente.";
 }
 
-// Si hay usuario logueado, obtener datos y estado de postulación
 $usuario = null;
 $tiene_cv = false;
 $ya_postulado = false;
@@ -54,9 +49,7 @@ if ($usuario_id !== null) {
     $ya_postulado = ($resCheck && mysqli_num_rows($resCheck) > 0);
 }
 
-// Restricciones de acceso que se aplican solo si hay sesión y rol:
 if ($rol !== null) {
-    // Si es jefe (rol 2) y no es el jefe de esta vacante, redirigir
     if ($rol === 2 && $vacante['ID_Jefe'] != $usuario_id) {
         header("Location: vacantes.php");
         exit();
@@ -68,7 +61,6 @@ if ($rol !== null) {
     }
 }
 
-// Procesar postulación (solo postulantes logueados - rol 0)
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["confirmar_postulacion"])) {
     if ($usuario_id === null || $rol !== 0) {
         $error = "Debes iniciar sesión como postulante para postularte.";
@@ -89,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["confirmar_postulacion
     }
 }
 
-// Finalizar vacante (solo rol 1 o 2)
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["finalizar_vacante"])) {
     if ($rol === 1 || $rol === 2) {
         $stmtFin = mysqli_prepare($conn, "UPDATE vacante SET estado = 'cerrada' WHERE ID = ?");
@@ -136,9 +127,9 @@ include("navbar.php");
 
 <div class="caja-vacante">
   <a href="vacantes.php" class="btn btn-outline-secondary btn-volver">
-    <i class="bi bi-arrow-left"></i>
+    <i class="bi bi-arrow-left"></i> Volver
   </a>
-    <h2 class="text-center mb-3"><?= htmlspecialchars($vacante['titulo']) ?></h2>
+    <h1 class="text-center mb-3"><?= htmlspecialchars($vacante['titulo']) ?></h1>
 <hr>
 
     <p><?= nl2br(htmlspecialchars($vacante['descripcion'])) ?></p>
@@ -151,37 +142,36 @@ include("navbar.php");
     <?php endif; ?>
 
   <div class="botonera">
-      <?php if ($rol === 0): // postulante logueado ?>
+      <?php if ($rol === 0): ?>
         <?php if ($ya_postulado): ?>
-          <div class="alert alert-info">Ya estás postulado a esta vacante.</div>
+          <div class="alert alert-info msjalerta ">Ya estás postulado a esta vacante.</div>
         <?php elseif (!$tiene_cv): ?>
-          <div class="alert alert-warning">No tienes cargado un Curriculum.</div>
+          <div class="alert alert-warning msjalerta " >No tienes cargado un Curriculum.</div>
         <?php elseif ($vacante['estado'] === 'abierta'): ?>
-          <!-- Botón que abre el modal -->
           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPostulacion">
             Postulate
           </button>
         <?php else: ?>
-          <div class="alert alert-secondary">La vacante no está disponible para postularse.</div>
+          <div class="alert alert-secondary msjalerta " >La vacante no está disponible para postularse.</div>
         <?php endif; ?>
 
-      <?php elseif ($rol === 1 || $rol === 2): // admin / jefe ?>
+      <?php elseif ($rol === 1 || $rol === 2): ?>
         <a href="editar_vacante.php?id=<?= $vacante['ID'] ?>" class="btn btn-warning">Editar</a>
         <a href="orden_de_merito.php?id=<?= $vacante['ID'] ?>" class="btn btn-info">Orden de Mérito</a>
         <?php if ($vacante['estado'] != "cerrada"): ?>
           <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#finalizarModal">Finalizar</button>
         <?php endif; ?>
 
-      <?php else: // visitante no logueado: NO mostrar otros botones ?>
-        <!-- Sólo visitante: no mostramos Postulate/Editar/Finalizar -->
+      <?php else: ?>
+  
       <?php endif; ?>
-
-      <a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a>
+        <div style="align-self: center"><a href="resultados.php?id=<?= $vacante['ID'] ?>" class="btn btn-success">Resultados</a></div>
+      
     </div>
   </div>
 
 <?php if ($rol === 0): ?>
-<!-- Modal Postulación (solo postulante logueado) -->
+
 <div class="modal fade" id="modalPostulacion" tabindex="-1" aria-labelledby="modalPostulacionLabel" aria-hidden="true">
   <div class="modal-dialog">
     <form method="POST" class="modal-content">
@@ -202,7 +192,7 @@ include("navbar.php");
 <?php endif; ?>
 
 <?php if ($rol === 1 || $rol === 2): ?>
-<!-- Modal Finalizar (solo para admin/jefe) -->
+
 <div class="modal fade" id="finalizarModal" tabindex="-1" aria-labelledby="finalizarModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -221,6 +211,7 @@ include("navbar.php");
       </form>
     </div>
   </div>
+  <h1></h1>
 </div>
 <?php endif; ?>
 

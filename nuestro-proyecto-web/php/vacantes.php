@@ -31,14 +31,14 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
     $rolUsuario = $_SESSION['rol'];
 
     if ($rolUsuario == 1) {
-        // Admin: ve todas las vacantes
+    
         $sql = "SELECT * 
                 FROM vacante 
                 ORDER BY fecha_fin DESC";
         $resultado = mysqli_query($conn, $sql);
 
     } elseif ($rolUsuario == 2) {
-        // Jefe: ve solo las suyas
+
         $sql = "SELECT v.* 
                 FROM vacante v
                 WHERE v.ID_Jefe = $idUsuario
@@ -46,7 +46,7 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
         $resultado = mysqli_query($conn, $sql);
 
     } else {
-        // Otros usuarios logueados
+  
         $sql = "SELECT * 
                 FROM vacante 
                 WHERE estado IN ('abierta','cerrada')
@@ -55,35 +55,34 @@ if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
     }
 
 } else {
-    // Visitantes no logueados
+
     $sql = "SELECT * 
             FROM vacante 
             WHERE estado IN ('abierta','cerrada') 
             ORDER BY fecha_fin DESC";
     $resultado = mysqli_query($conn, $sql);
 }
+
 $paginaActiva="vacantes";
 include("navbar.php");
 ?>
-
-
 
 <div class="container2 ">
 
   <a href="../index.php">
   <img id="image-utn2" src="../assets/images/UTN-Logo-M2.png" alt="Logo Universidad" >
   </a>
+  
+<h1>Vacantes</h1>  
 
 <div class="linea mb-3">
-  <div class="titulo">
-    <p>Vacantes</p>
-  </div>
   <div class="d-flex align-items-center gap-2">
-  <input type="text" class="form-control" name="busqueda" id="busqueda" placeholder="Buscar">
+  <label for="busqueda" class="visually-hidden">Buscar personas</label>  
+    <input type="text" class="form-control" name="busqueda" id="busqueda" placeholder="Buscar">
   
 <?php if (isset($_SESSION["rol"])): ?>
   <?php if ($_SESSION["rol"] == 1 || $_SESSION["rol"] == 2): ?>
-    <!-- Admin y Jefe: todas las opciones -->
+    <label for="filtro-estado" class="visually-hidden">Filtrar por estado</label>
     <select id="filtro-estado" class="form-select w-auto">
       <option value="">Todas</option>
       <option value="abierta">Abiertas</option>
@@ -92,7 +91,7 @@ include("navbar.php");
       <option value="sin abrir">Sin abrir</option>
     </select>
   <?php else: ?>
-    <!-- Postulante u otro rol: solo abiertas y cerradas -->
+
     <select id="filtro-estado" class="form-select w-auto">
       <option value="">Todas</option>
       <option value="abierta">Abiertas</option>
@@ -100,7 +99,8 @@ include("navbar.php");
     </select>
   <?php endif; ?>
 <?php else: ?>
-  <!-- Visitante no logueado: solo abiertas y cerradas -->
+
+  <label for="filtro-estado" class="visually-hidden">Filtrar por estado</label>
   <select id="filtro-estado" class="form-select w-auto">
     <option value="">Todas</option>
     <option value="abierta">Abiertas</option>
@@ -166,7 +166,7 @@ include("navbar.php");
     const vacantes = document.querySelectorAll('.vacante');
 
     vacantes.forEach(function(vacante) {
-      const titulo = vacante.querySelector('h5').textContent;   // ✅ ahora también busca en el título
+      const titulo = vacante.querySelector('h5').textContent;
       const descripcion = vacante.querySelector('.descripcion-recortada').textContent;
       const estado = vacante.querySelector('.estado').textContent.toLowerCase();
 

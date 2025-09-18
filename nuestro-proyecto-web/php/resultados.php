@@ -32,13 +32,18 @@ include("head.php");
 
 <div class="linea d-flex justify-content-between align-items-center">
   <div class="titulo mb-0">
-    <p class="mb-0">Personas</p>
+    <h1 class="mb-0">Personas</h1>
   </div>
   <div class="d-flex align-items-center gap-3">
+    <label for="busqueda" class="visually-hidden">Buscar personas</label>
     <input type="text" class="buscar" name="busqueda" id="busqueda" placeholder="Buscar">
-    <a href="unavacante.php?id=<?= urlencode($idVacante) ?>" class="btn btn-outline-secondary btn-volver">
-      <i class="bi bi-arrow-left"></i>
-    </a>
+    <a href="unavacante.php?id=<?= urlencode($idVacante) ?>" 
+       class="btn btn-outline-secondary flecha" 
+       style="background-color: white" 
+       aria-label="Volver a la vacante">
+     <i class="bi bi-arrow-left"></i>
+     <span class="visually-hidden">Volver a la vacante</span>
+</a>
   </div>
 </div>
 
