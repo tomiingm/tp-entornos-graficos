@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/estilos.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="icon" href="/nuestro-proyecto-web/assets/images/utn.ico" type="image/x-icon">
-</head>
+<?php 
+$titulo="Registrarse";
+include("head.php");
+?>
 
 <?php
 require('conection.php');
@@ -71,23 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarContenido">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active rounded-pill px-4 bg-secondary text-white" href="../index.php" aria-label="Inicio">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-4" href="vacantes.php" aria-label="Vacantes">Vacantes</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php 
+        $paginaActiva="inicio";
+        include("navbar.php");
+
+    ?>
     <div class="container contenedor">
         <div class="row justify-content-md-center">
             <div class="col text-end">

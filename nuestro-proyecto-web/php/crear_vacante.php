@@ -53,38 +53,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Crear Vacante</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/estilosvacantes.css" rel="stylesheet">
-  <link href="../css/estilos.css" rel="stylesheet">
-  <link rel="icon" href="/nuestro-proyecto-web/assets/images/utn.ico" type="image/x-icon">
-</head>
+<?php 
+$titulo="Crear Vacante";
+include("head.php");
+?>
 <body>
+<?php 
+$paginaActiva="vacantes";
+include("navbar.php");
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-center" id="navbarContenido">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link px-4" href="../index.php">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link rounded-pill active px-4 bg-secondary text-white" href="../php/vacantes.php">Vacantes</a>
-        </li>
-        <?php if (isset($_SESSION["usuario_id"])): ?>
-          <li class="nav-item">
-            <a class="nav-link px-4" href="../php/perfil.php">Perfil</a>
-          </li>
-        <?php endif; ?>
-      </ul>
-    </div>
-  </div>
-</nav>
+?>
+
 <div class="container">
 <div class="caja_nueva_vacante shadow-lg">
 
