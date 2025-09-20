@@ -26,40 +26,60 @@ $stmtActualizar2 = mysqli_prepare($conn, $sqlActualizar2);
 mysqli_stmt_bind_param($stmtActualizar2, "s", $hoy);
 mysqli_stmt_execute($stmtActualizar2);
 
+$vacantesPorPagina = 3;
+$paginaActual = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($paginaActual < 1) $paginaActual = 1;
+
+$offset = ($paginaActual - 1) * $vacantesPorPagina;
+
 if (isset($_SESSION["usuario_id"]) && isset($_SESSION["rol"])) {
     $idUsuario = $_SESSION['usuario_id'];
     $rolUsuario = $_SESSION['rol'];
 
     if ($rolUsuario == 1) {
-    
+        $sqlTotal = "SELECT COUNT(*) AS total FROM vacante";
+    } elseif ($rolUsuario == 2) {
+        $sqlTotal = "SELECT COUNT(*) AS total FROM vacante WHERE ID_Jefe = $idUsuario";
+    } else {
+        $sqlTotal = "SELECT COUNT(*) AS total FROM vacante WHERE estado IN ('abierta','cerrada')";
+    }
+    $resultTotal = mysqli_query($conn, $sqlTotal);
+    $filaTotal = mysqli_fetch_assoc($resultTotal);
+    $totalVacantes = $filaTotal['total'];
+    $totalPaginas = ceil($totalVacantes / $vacantesPorPagina);
+
+    if ($rolUsuario == 1) {
         $sql = "SELECT * 
                 FROM vacante 
-                ORDER BY fecha_fin DESC";
-        $resultado = mysqli_query($conn, $sql);
-
+                ORDER BY fecha_fin DESC
+                LIMIT $vacantesPorPagina OFFSET $offset";
     } elseif ($rolUsuario == 2) {
-
         $sql = "SELECT v.* 
                 FROM vacante v
                 WHERE v.ID_Jefe = $idUsuario
-                ORDER BY v.fecha_fin DESC";
-        $resultado = mysqli_query($conn, $sql);
-
+                ORDER BY v.fecha_fin DESC
+                LIMIT $vacantesPorPagina OFFSET $offset";
     } else {
-  
         $sql = "SELECT * 
                 FROM vacante 
                 WHERE estado IN ('abierta','cerrada')
-                ORDER BY fecha_fin DESC";
-        $resultado = mysqli_query($conn, $sql);
+                ORDER BY fecha_fin DESC
+                LIMIT $vacantesPorPagina OFFSET $offset";
     }
+    $resultado = mysqli_query($conn, $sql);
 
 } else {
+    $sqlTotal = "SELECT COUNT(*) AS total FROM vacante WHERE estado IN ('abierta','cerrada')";
+    $resultTotal = mysqli_query($conn, $sqlTotal);
+    $filaTotal = mysqli_fetch_assoc($resultTotal);
+    $totalVacantes = $filaTotal['total'];
+    $totalPaginas = ceil($totalVacantes / $vacantesPorPagina);
 
     $sql = "SELECT * 
             FROM vacante 
             WHERE estado IN ('abierta','cerrada') 
-            ORDER BY fecha_fin DESC";
+            ORDER BY fecha_fin DESC
+            LIMIT $vacantesPorPagina OFFSET $offset";
     $resultado = mysqli_query($conn, $sql);
 }
 
@@ -150,6 +170,32 @@ include("navbar.php");
       echo "</div>";
     } ?>
   </div>
+
+<div class="paginacion d-flex justify-content-center mt-3">
+  <nav>
+    <ul class="pagination">
+  
+      <?php if ($paginaActual > 1): ?>
+        <li class="page-item">
+          <a class="page-link" href="?page=<?php echo $paginaActual - 1; ?>">Anterior</a>
+        </li>
+      <?php endif; ?>
+
+      <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
+        <li class="page-item <?php echo ($i == $paginaActual) ? 'active' : ''; ?>">
+          <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+        </li>
+      <?php endfor; ?>
+
+      <?php if ($paginaActual < $totalPaginas): ?>
+        <li class="page-item">
+          <a class="page-link" href="?page=<?php echo $paginaActual + 1; ?>">Siguiente</a>
+        </li>
+      <?php endif; ?>
+    </ul>
+  </nav>
+</div>
+
 </div>
 
 <script>
