@@ -16,12 +16,12 @@ $mensaje = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre    = trim($_POST["nombre"]);
     $apellido  = trim($_POST["apellido"]);
-    $dni       = trim($_POST["dni"]);
-    $mail      = trim($_POST["mail"]);
+    $dni       = isset($_POST["dni"]) ? (int) $_POST["dni"] : 0; // casteo a int
+    $mail      = trim($_POST["correo"]); 
     $domicilio = trim($_POST["domicilio"]);
-    $telefono  = trim($_POST["telefono"]);
+    $telefono  = trim($_POST["telefono"]); 
     $clave     = trim($_POST["clave"]);
-    $rol       = $_POST["rol"];
+    $rol       = isset($_POST["rol"]) ? (int) $_POST["rol"] : 0; // casteo a int
 
     // Validaciones del lado servidor
     if (!preg_match("/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/", $nombre) || strlen($nombre) > 255) {
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Verificar si ya existe ese DNI
         $check = mysqli_prepare($conn, "SELECT ID FROM persona WHERE DNI = ?");
-        mysqli_stmt_bind_param($check, "s", $dni);
+        mysqli_stmt_bind_param($check, "i", $dni);
         mysqli_stmt_execute($check);
         mysqli_stmt_store_result($check);
 
@@ -53,7 +53,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "INSERT INTO persona (nombre, apellido, mail, clave, DNI, rol, domicilio, telefono) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $sql);
-            mysqli_stmt_bind_param($stmt, "ssssisss", $nombre, $apellido, $mail, $password, $dni, $rol, $domicilio, $telefono);
+            mysqli_stmt_bind_param(
+                $stmt, 
+                "ssssisss", 
+                $nombre,     
+                $apellido,    
+                $mail,        
+                $password,    
+                $dni,         
+                $rol,         
+                $domicilio,   
+                $telefono     
+            );
 
             if (mysqli_stmt_execute($stmt)) {
                 $mensaje = "✅ ¡Registro exitoso!";
@@ -69,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php 
         $paginaActiva="inicio";
         include("navbar.php");
-
     ?>
     <div class="container contenedor">
         <div class="row justify-content-md-center">
@@ -141,7 +151,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 title="Solo números, máximo 13 dígitos"
                                 oninvalid="this.setCustomValidity('⚠️ El teléfono solo puede tener números, máximo 13 dígitos.')"
                                 oninput="this.setCustomValidity('')">
-
                         </div>
                         <div class="mb-3">
                             <label for="clave" class="form-label">Clave:</label>
