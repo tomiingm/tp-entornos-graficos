@@ -1,19 +1,17 @@
 body::before {
-    content: ' ';
+    content: " ";
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('https://www.alumnos.frro.utn.edu.ar/fondo.gif');
+    background-image: url("https://www.alumnos.frro.utn.edu.ar/fondo.gif");
     background-repeat: repeat;
     background-attachment: fixed;
     z-index: -1000000;
     background-size: 80px 80px;
     opacity: 0.6;
-
 }
-
 
 .formulario-box {
     background-color: white;
@@ -23,29 +21,25 @@ body::before {
     max-width: 500px;
 }
 
-.contenedor{
+.contenedor {
     margin-top: 40px;
     margin-bottom: 40px;
 }
 
-.link-logo-facu{
-   width: 600px;
+.link-logo-facu {
+    width: 600px;
     height: 200px;
-} 
-
+}
 
 .sin-flechas::-webkit-outer-spin-button,
 .sin-flechas::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .sin-flechas {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
-
-
-
 
 #image-utn {
     width: 600px;
@@ -58,7 +52,6 @@ body::before {
     margin-bottom: 20px;
 }
 
-
 @media (max-width: 576px) {
     #image-utn {
         width: 350px;
@@ -70,21 +63,19 @@ body::before {
         width: 350px;
 
         margin-bottom: 20px;
+    }
 }
-
-}
-
 
 .nav-item:hover {
-    background-color: #6d747d; 
+    background-color: #6d747d;
     border-radius: 50rem;
-    transition : background-color 0.1s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
 }
 
 .nav-item {
     border-radius: 50rem;
     font-weight: bold;
-    transition: background-color 0.2s ease-in-out; 
+    transition: background-color 0.2s ease-in-out;
 }
 
 .nav-item:hover a {
@@ -92,17 +83,20 @@ body::before {
 }
 
 .caja {
-      background-color: #fff;
-      border-radius: 15px;
-      padding: 30px;
-      max-width: 900px;
-      margin: 40px auto;
-      box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
-    }
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 900px;
+    margin: 40px auto;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
 h2 {
     text-align: center;
     margin-bottom: 20px;
 }
 table {
-      background: #fff;
-    }
+    background: #fff;
+}
+
+.mapita {
+}
