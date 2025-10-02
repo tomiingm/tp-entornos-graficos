@@ -72,8 +72,12 @@ include("navbar.php");
                     <?php } ?>
                     <div class="form-floating mb-3"> 
                         <input id="clave" type="password" class="form-control" name="clave" placeholder="Contraseña" required> 
-                        <label for="clave">Contraseña</label> 
-                    </div> <div class="checkbox mb-3"> 
+                        <label for="clave">Contraseña</label>
+                        <span class="ver-password" onclick="verPassword('clave', this)">
+                        <i class="bi bi-eye"></i>
+                    </span> 
+                    </div> 
+                    <div class="checkbox mb-3">
                         <label> <input type="checkbox" value="remember-me"> Recordar mis datos</label>
                     </div> 
                     <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">Iniciar Sesión</button> 
@@ -87,6 +91,26 @@ include("navbar.php");
         </div> 
     </div>
                 </div>
+
+
+
+
+<script>
+  function verPassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon  = btn.querySelector('i');
+
+    const showing = input.type === 'text';
+    input.type = showing ? 'password' : 'text';
+
+    
+    icon.classList.toggle('bi-eye', showing);        // si estaba visible, vuelve al ojo normal
+    icon.classList.toggle('bi-eye-slash', !showing); // si estaba oculto, muestra el ojo tachado
+  }
+</script>
+
+
+
 </body>
 
 
