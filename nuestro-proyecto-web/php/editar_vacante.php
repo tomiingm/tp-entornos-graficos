@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif ($fecha_ini <= $hoy && $fecha_fin >= $hoy) {
       $estado = "abierta";
     } else {
-      $estado = "finalizada";
+      $estado = "cerrada";
     }
 
     $sql = "UPDATE vacante SET titulo=?, descripcion=?, fecha_ini=?, fecha_fin=?, ID_Jefe=?, estado=? WHERE ID=?";
