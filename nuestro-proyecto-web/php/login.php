@@ -54,13 +54,14 @@ include("navbar.php");
         
     <a href="../index.php" class="link-logo-facu" >
         <div class="col-lg-7 text-center text-lg-start"> 
-            <img src="/nuestro-proyecto-web/assets/images/UTN-Logo-M.png" alt="Logo Universidad" class="imagen-logo-facu" id="image-utn" >
+            <img src="/../assets/images/UTN-Logo-M.png" alt="Logo Universidad" class="imagen-logo-facu" id="image-utn" >
         </div> 
     </a>
 
         <div class="col-md-10 mx-auto col-lg-5">
             
             <form action="login.php" method="post" class="p-4 p-md-5 border rounded-3 bg-body-tertiary shadow-lg"> 
+            <h1>Iniciar Sesión</h1>
                 <div class="form-floating mb-3" > 
                     <input type="number" class="form-control" name="dni" id="dni" required min="1000000" max="99999999"  placeholder="Documento (DNI)"> 
                     <label for="dni">Número de Documento (DNI)</label> 
@@ -76,9 +77,6 @@ include("navbar.php");
                         <span class="ver-password" onclick="verPassword('clave', this)">
                         <i class="bi bi-eye"></i>
                     </span> 
-                    </div> 
-                    <div class="checkbox mb-3">
-                        <label> <input type="checkbox" value="remember-me"> Recordar mis datos</label>
                     </div> 
                     <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">Iniciar Sesión</button> 
 
@@ -108,8 +106,6 @@ include("navbar.php");
     icon.classList.toggle('bi-eye-slash', !showing); // si estaba oculto, muestra el ojo tachado
   }
 </script>
-
-
 
 </body>
 
